@@ -2,10 +2,11 @@ package com.example.repositorio.ui.add_file_admin.viewstate
 
 import com.example.repositorio.ui.add_file_admin.model.AuthorsModelUI
 import com.example.repositorio.ui.add_file_admin.model.PublicTypesModelUI
+import java.io.File
 
 data class AuthorsViewState(
     val authors: List<AuthorsModelUI> = emptyList(),
-    val types: List<PublicTypesModelUI> = emptyList()
+    val types: List<PublicTypesModelUI> = emptyList(),
 ) {
     fun updateAuthorsList(
         authors: List<AuthorsModelUI>

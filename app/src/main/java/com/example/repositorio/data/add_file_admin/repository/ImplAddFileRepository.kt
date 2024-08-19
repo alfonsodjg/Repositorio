@@ -8,6 +8,13 @@ import com.example.repositorio.domain.add_file_admin.model.PublicTypeDomainModel
 import com.example.repositorio.domain.add_file_admin.repository.IAddFileRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
+import java.io.File
 
 class ImplAddFileRepository: IAddFileRepository {
     private val api = ApiClient.instance
@@ -33,4 +40,59 @@ class ImplAddFileRepository: IAddFileRepository {
            if (response.isSuccessful) response.body()?.map { it.toDomain() } else null
         }
     }
+    /*override suspend fun uploadBook(
+        titulo: String,
+        imagenFile: File?,
+        materia: String,
+        fechaPublicacion: String,
+        tipoPublicacion: String,
+        pdfFile: File?,
+        resumen: String,
+        autor: String
+    ): Result<ResponseBody> {
+        return withContext(Dispatchers.IO) {
+            try {
+                // Crear RequestBody para los parámetros de texto
+                val tituloBody = createRequestBody(titulo)
+                val materiaBody = createRequestBody(materia)
+                val fechaPublicacionBody = createRequestBody(fechaPublicacion)
+                val tipoPublicacionBody = createRequestBody(tipoPublicacion)
+                val resumenBody = createRequestBody(resumen)
+                val autorBody = createRequestBody(autor)
+
+                // Preparar los archivos como MultipartBody.Part
+                val imagenPart = imagenFile?.let { prepareFilePart("imagen", it) }
+                val pdfPart = pdfFile?.let { prepareFilePart("pdf", it) }
+
+                // Asegúrate de que el método esté definido correctamente en tu interfaz
+                val response = api.uploadFile(
+                    tituloBody,
+                    imagenPart,
+                    materiaBody,
+                    fechaPublicacionBody,
+                    tipoPublicacionBody,
+                    pdfPart,
+                    resumenBody,
+                    autorBody
+                )
+
+                if (response.isSuccessful) {
+                    Result.success(response.body())
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    private fun createRequestBody(value: String): RequestBody {
+        return value.toRequestBody("text/plain".toMediaTypeOrNull())
+    }
+
+    private fun prepareFilePart(partName: String, file: File): MultipartBody.Part {
+        val requestFile = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData(partName, file.name, requestFile)
+    }*/
 }

@@ -1,5 +1,8 @@
 package com.example.repositorio.ui.add_file_admin.view
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,10 +18,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +40,7 @@ import com.example.repositorio.components.bottomnavigation.ItemsMenu
 import com.example.repositorio.ui.add_file_admin.viewmodel.AuthorsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.repositorio.ui.utils.getFileName
 
 
 @Composable
@@ -48,6 +55,10 @@ fun AddFileAdminView(
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color.Yellow
     val state = viewModel.state.collectAsState()
+    val selectedPdf by viewModel.selectedPdf.collectAsState()
+    val selectedImage by viewModel.selectedImage.collectAsState()
+    val uploadState by viewModel.uploadState.observeAsState()
+    val context = LocalContext.current
 
     SideEffect {
         systemUiController.setStatusBarColor(
@@ -59,7 +70,7 @@ fun AddFileAdminView(
         viewModel.onAuthorList()
         viewModel.onTypes()
     }
-    println("Hola que tal ${state.value.authors.size}")
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -81,6 +92,22 @@ fun AddFileAdminView(
                         .verticalScroll(state = rememberScrollState())
                         .padding(bottom = 100.dp)
                 ) {
+                    val pdfPickerLauncher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.OpenDocument()
+                    ) { uri: Uri? ->
+                        uri?.let {
+                            val fileName = uri.getFileName(context)
+                            viewModel.onPdfSelected(fileName)
+                        }
+                    }
+                    val imagePickerLauncher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.OpenDocument()
+                    ) { uri: Uri? ->
+                        uri?.let {
+                            val imageName = uri.getFileName(context)
+                            viewModel.onImageSelected(imageName)
+                        }
+                    }
                     Button(onClick = { navController.navigate(ItemsMenu.Admin.route) }) {
                         Text(text = "Regresar")
                     }
@@ -88,18 +115,14 @@ fun AddFileAdminView(
                         painter = painterResource(id = R.drawable.file),
                         contentDescription = null
                     )
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = { pdfPickerLauncher.launch(arrayOf("application/pdf"))  }) {
                         Text(text = "Abrir archivo")
                     }
-                    TextInputComponent(
-                        modifier = Modifier, placeholder = "archivo", onChangeText = {}
-                    )
-                    Button(onClick = { /*TODO*/ }) {
+                    TextField(value = selectedPdf,placeholder ={ Text(text = "archivo")}, onValueChange = {})
+                    Button(onClick = { imagePickerLauncher.launch(arrayOf("image/*")) }) {
                         Text(text = "Imagen")
                     }
-                    TextInputComponent(
-                        modifier = Modifier, placeholder = "archivo", onChangeText = {}
-                    )
+                    TextField(value = selectedImage, placeholder = { Text(text = "imagen") }, onValueChange = {})
                     TextInputComponent(
                         modifier = Modifier, placeholder = "Titulo", onChangeText = {}
                     )
@@ -133,7 +156,7 @@ fun AddFileAdminView(
                         authors = state.value.authors
                     )
                     Spinner(
-                        text = "",
+                        text = "Selecciona tipo de publicacion",
                         types = state.value.types
                     )
                     Button(onClick = { /*TODO*/ }) {

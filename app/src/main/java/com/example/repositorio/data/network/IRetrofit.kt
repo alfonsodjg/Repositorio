@@ -6,11 +6,16 @@ import com.example.repositorio.data.home.model.BookResponse
 import com.example.repositorio.data.login.model.LoginResponse
 import com.example.repositorio.data.login.model.UserDataModel
 import com.example.repositorio.data.profile.model.UserInfo
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface IRetrofit {
     @POST("/api/auth/login/")
@@ -30,5 +35,18 @@ interface IRetrofit {
     suspend fun getAuthorsItemResponse(): Response<List<AuthorItemResponse>>
 
     @GET("/api/gestion/lista/tiposdepublicacion/")
-    fun getType(): Response<List<PublicTypeResponse>>
+    suspend fun getType(): Response<List<PublicTypeResponse>>
+
+    @Multipart
+    @POST("tu_endpoint")
+    suspend fun uploadFile(
+        @Part("titulo") titulo: RequestBody,
+        @Part imagen: MultipartBody.Part?,
+        @Part("materia") materia: RequestBody,
+        @Part("fechaPublicacion") fechaPublicacion: RequestBody,
+        @Part("tipoPublicacion") tipoPublicacion: RequestBody,
+        @Part pdf: MultipartBody.Part?,
+        @Part("resumen") resumen: RequestBody,
+        @Part("autor") autor: RequestBody
+    ): Response<ResponseBody>
 }
