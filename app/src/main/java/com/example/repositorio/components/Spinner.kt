@@ -18,8 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.repositorio.ui.add_file_admin.model.AuthorsModelUI
-import com.example.repositorio.ui.add_file_admin.model.PublicTypesModelUI
+import com.example.repositorio.ui.modules.add_file_admin.model.AuthorsModelUI
+import com.example.repositorio.ui.modules.add_file_admin.model.PublicTypesModelUI
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

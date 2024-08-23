@@ -1,11 +1,10 @@
 package com.example.repositorio.data.network
 
-import com.example.repositorio.data.add_file_admin.model.AuthorItemResponse
-import com.example.repositorio.data.add_file_admin.model.PublicTypeResponse
-import com.example.repositorio.data.home.model.BookResponse
-import com.example.repositorio.data.login.model.LoginResponse
-import com.example.repositorio.data.login.model.UserDataModel
-import com.example.repositorio.data.profile.model.UserInfo
+import com.example.repositorio.data.modules.add_file_admin.model.AuthorItemResponse
+import com.example.repositorio.data.modules.add_file_admin.model.PublicTypeResponse
+import com.example.repositorio.data.modules.home.model.BookResponse
+
+import com.example.repositorio.data.modules.profile.model.UserInfo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -18,9 +17,6 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface IRetrofit {
-    @POST("/api/auth/login/")
-    suspend fun postLogin(@Body userLogin: UserDataModel): Response<LoginResponse>
-
     @GET("/api/archivo/") ///api/archivo/?page=${page}
     suspend fun getBooks(
         @Header("Authorization") token: String,

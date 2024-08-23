@@ -7,14 +7,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.repositorio.components.bottomnavigation.ItemsMenu
-import com.example.repositorio.ui.login.view.LoginView
 import com.example.repositorio.ui.theme.view.MainView
 import com.example.repositorio.ui.theme.view.bottomnavigationviews.AdminView
-import com.example.repositorio.ui.home.view.HomeView
-import com.example.repositorio.ui.about.InfoView
-import com.example.repositorio.ui.add_file_admin.view.AddFileAdminView
-import com.example.repositorio.ui.profile.view.ProfileRecovery
-import com.example.repositorio.ui.login.viewmodel.LoginViewModel
+import com.example.repositorio.ui.modules.home.view.HomeView
+import com.example.repositorio.ui.modules.about.InfoView
+import com.example.repositorio.ui.modules.add_file_admin.view.AddFileAdminView
+import com.example.repositorio.ui.modules.profile.view.ProfileRecovery
+import com.example.repositorio.ui.modules.login.view.LoginView
 
 @Composable
 fun NavMain(){
@@ -23,7 +22,7 @@ fun NavMain(){
     NavHost(
         navController = navController,
         startDestination = "Login"){
-        composable("Login"){ LoginView(viewModel = LoginViewModel(), navController) }
+        composable("Login"){ LoginView(navController = navController) }
         composable("MainView"){ MainView(navController)}
     }
 }

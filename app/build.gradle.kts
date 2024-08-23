@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
 }
 
 android {
@@ -75,6 +76,20 @@ dependencies {
     //coil images
     implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
+    //ktor client
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.slf4j)
+    implementation(libs.ktor.client.resources)
+    //implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktor.client.auth)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.gson)
+    implementation(libs.ktor.client.logging)
+
+    //koin injection
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
