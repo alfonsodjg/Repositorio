@@ -14,21 +14,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.repositorio.core.utils.SaveToken
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.repositorio.R
+import com.example.repositorio.components.CustomBottomBarComponent
 import com.example.repositorio.domain.modules.home.model.BooksDomainModel
 import com.example.repositorio.ui.modules.home.viewmodel.HomeViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+@Preview
+@Composable fun HomePreView(){
+    HomeView(
+        onGoToHome = {},
+        onGoToProfile = {},
+        onGoToAbout = {},
+        onGoToAdmin = {}
+    )
+}
 @Composable
 fun HomeView(
-    navController: NavController,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = viewModel(),
+    onGoToHome:()->Unit,
+    onGoToProfile:()->Unit,
+    onGoToAbout:()->Unit,
+    onGoToAdmin:()->Unit
 ) {
     val state = viewModel.viewState.collectAsState()
     val systemUiController = rememberSystemUiController()
@@ -51,23 +64,40 @@ fun HomeView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color.Black)
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 100.dp)
-        ) {
-            item {
-                Image(
-                    painter = painterResource(id = R.drawable.largo),
-                    contentDescription = null,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 35.dp)
-                )
-            }
-            items(state.value.bookModelUI.results){
-                BookCard(book = it)
-            }
-        }
+       Column(
+           modifier = Modifier.fillMaxSize()
+               .background(Color.White)
+       ) {
+           LazyColumn(
+               modifier = Modifier.weight(1f),
+               contentPadding = PaddingValues(bottom = 16.dp)
+           ) {
+               item {
+                   Image(
+                       painter = painterResource(id = R.drawable.largo),
+                       contentDescription = null,
+                       modifier = Modifier.padding(horizontal = 16.dp, vertical = 35.dp)
+                   )
+               }
+               items(state.value.bookModelUI.results){
+                   BookCard(book = it)
+               }
+           }
+           Box(
+               modifier = Modifier.fillMaxWidth().height(50.dp)
+                   .background(Color.Black),
+               contentAlignment = Alignment.BottomEnd
+           ) {
+               CustomBottomBarComponent(
+                   onGoToHome = onGoToHome,
+                   onGoToProfile = onGoToProfile,
+                   onGoToAbout = onGoToAbout,
+                   onGoToAdmin = onGoToAdmin
+               )
+           }
+       }
     }
 }
 

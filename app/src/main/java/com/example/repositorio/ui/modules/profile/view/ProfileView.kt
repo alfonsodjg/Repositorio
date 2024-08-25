@@ -40,13 +40,18 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.example.repositorio.ui.modules.profile.viewmodel.BookViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.repositorio.R
+import com.example.repositorio.components.CustomBottomBarComponent
 import com.example.repositorio.core.utils.SaveToken
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
 fun ProfileRecovery(
-    viewModel: BookViewModel = viewModel()
+    viewModel: BookViewModel = viewModel(),
+    onGoToHome: () -> Unit,
+    onGoToProfile:()->Unit,
+    onGoToAbout:()->Unit,
+    onGoToAdmin:()->Unit
 ) {
     val state = viewModel.viewState.observeAsState()
     val systemUiController = rememberSystemUiController()
@@ -66,7 +71,11 @@ fun ProfileRecovery(
         name = state.value?.userInfoModelUI?.first_name.toString(),
         lastName = state.value?.userInfoModelUI?.last_name.toString(),
         lastNameTwo = state.value?.userInfoModelUI?.apellido_materno.toString(),
-        matricula = state.value?.userInfoModelUI?.matricula.toString()
+        matricula = state.value?.userInfoModelUI?.matricula.toString(),
+        onGoToHome = onGoToHome,
+        onGoToProfile = onGoToProfile,
+        onGoToAbout = onGoToAbout,
+        onGoToAdmin = onGoToAdmin
     )
 }
 
@@ -75,7 +84,11 @@ fun ProfileView(
     name: String,
     lastName: String,
     lastNameTwo: String,
-    matricula: String
+    matricula: String,
+    onGoToHome: ()->Unit,
+    onGoToProfile:()->Unit,
+    onGoToAbout:()->Unit,
+    onGoToAdmin:()->Unit
 ) {
     Column(
         modifier = Modifier
@@ -83,16 +96,14 @@ fun ProfileView(
             .verticalScroll(state = rememberScrollState())
             .background(Color.White)
     ) {
-        Box {
-            Image(
-                painter = painterResource(id = R.drawable.profile),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-                    .padding(top = 50.dp)
-            )
-        }
+        Image(
+            painter = painterResource(id = R.drawable.profile),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .padding(top = 50.dp)
+        )
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,6 +145,7 @@ fun ProfileView(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .weight(1f)
                 .padding(top = 90.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -147,6 +159,18 @@ fun ProfileView(
             ) {
                 Text(text = "Cerrar sesion")
             }
+        }
+        Box(
+            modifier = Modifier.fillMaxWidth().height(50.dp)
+                .background(Color.Black),
+            contentAlignment = Alignment.BottomEnd
+        ) {
+            CustomBottomBarComponent(
+                onGoToHome = onGoToHome,
+                onGoToProfile = onGoToProfile,
+                onGoToAbout = onGoToAbout,
+                onGoToAdmin = onGoToAdmin
+            )
         }
     }
 }
@@ -162,6 +186,10 @@ fun ProfilePreView(
         name = "Ivan",
         lastName = "Jeronimo",
         lastNameTwo = "Mariano",
-        matricula = "186w0999"
+        matricula = "186w0999",
+        onGoToHome = {},
+        onGoToProfile = {},
+        onGoToAbout = {},
+        onGoToAdmin = {}
     )
 }

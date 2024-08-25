@@ -1,4 +1,4 @@
-package com.example.repositorio.ui.modules.about
+package com.example.repositorio.ui.modules.about.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -22,10 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.repositorio.R
+import com.example.repositorio.components.CustomBottomBarComponent
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun InfoView(){
+fun AboutView(
+    onGoToHome:()->Unit,
+    onGoToProfile:()->Unit,
+    onGoToAbout:()->Unit,
+    onGoToAdmin:()->Unit
+){
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color.Yellow
 
@@ -54,11 +62,15 @@ fun InfoView(){
             color = Color.Black,
             modifier = Modifier.padding(top = 5.dp,start = 20.dp, end = 20.dp)
         )
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = null,
-            modifier = Modifier.fillMaxWidth()
-        )
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.newlogo),
+                contentDescription = null
+            )
+        }
         Text(
             text = "El Instituto Tecnológico Superior de Zongolica ahora cuenta con una aplicación móvil en la cual los estudiantes podrán consultarla información de tesis y proyectos de residencias profesionales.",
             color = Color.Black,
@@ -70,14 +82,26 @@ fun InfoView(){
             modifier = Modifier.padding(start = 20.dp, end = 20.dp,top = 15.dp)
         )
        Box(
-           modifier = Modifier.fillMaxWidth()
-               .padding(top = 30.dp, bottom = 120.dp),
+           modifier = Modifier.fillMaxWidth().weight(1f)
+               .padding(top = 30.dp, bottom = 10.dp),
            contentAlignment = Alignment.Center
        ) {
            Button(onClick = { /*TODO*/ }) {
                Text(text = "Ver manual de usuario")
            }
        }
+        Box(
+            modifier = Modifier.fillMaxWidth().height(50.dp)
+                .background(Color.Black),
+            contentAlignment = Alignment.BottomEnd
+        ) {
+            CustomBottomBarComponent(
+                onGoToHome = onGoToHome,
+                onGoToProfile = onGoToProfile,
+                onGoToAbout = onGoToAbout,
+                onGoToAdmin = onGoToAdmin
+            )
+        }
     }
 }
 
@@ -87,5 +111,10 @@ fun InfoView(){
 )
 @Composable
 fun InfoPreView(){
-    InfoView()
+    AboutView(
+        onGoToHome = {},
+        onGoToProfile = {},
+        onGoToAbout = {},
+        onGoToAdmin = {}
+    )
 }

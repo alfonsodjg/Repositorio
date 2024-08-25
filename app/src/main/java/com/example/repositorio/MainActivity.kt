@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.repositorio.navigation.NavMain
+import com.example.repositorio.navigation.main.MainScaffold
 import com.example.repositorio.ui.theme.RepositorioTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                   NavMain()
+                    //NavMain()
+                    MainScaffold()
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.example.repositorio.ui.theme.view.bottomnavigationviews
+package com.example.repositorio.ui.modules.admin.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -22,13 +23,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.repositorio.R
+import com.example.repositorio.components.CustomBottomBarComponent
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun AdminView(
-    navController: NavController
+    onGoToHome:()->Unit,
+    onGoToProfile:()->Unit,
+    onGoToAbout:()->Unit,
+    onGoToAdmin:()->Unit,
+    onGoToAddFile:()->Unit
 ){
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color.Yellow
@@ -70,12 +75,13 @@ fun AdminView(
 
             Box(
                 modifier = Modifier.fillMaxWidth()
+                    .weight(1f)
                     .padding(top = 140.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Column {
                     Button(onClick = {
-                        navController.navigate("AddFileAdminView")
+                        onGoToAddFile()
                     }) {
                         Text(text = "Agregar documento")
                     }
@@ -88,6 +94,18 @@ fun AdminView(
                     }
                 }
             }
+            Box(
+                modifier = Modifier.fillMaxWidth().height(50.dp)
+                    .background(Color.Black),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                CustomBottomBarComponent(
+                    onGoToHome = onGoToHome,
+                    onGoToProfile = onGoToProfile,
+                    onGoToAbout = onGoToAbout,
+                    onGoToAdmin = onGoToAdmin
+                )
+            }
         }
     }
 }
@@ -99,5 +117,11 @@ fun AdminView(
 @Composable
 fun AdminPreView(){
     val context = LocalContext.current
-    AdminView(navController = NavController(context))
+    AdminView(
+        onGoToHome = {},
+        onGoToProfile = {},
+        onGoToAbout = {},
+        onGoToAdmin = {},
+        onGoToAddFile = {}
+    )
 }

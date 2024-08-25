@@ -69,8 +69,8 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.8")
     //coil
     implementation("io.coil-kt:coil-compose:2.6.0")
-    //navigation
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+    //navigation compoae
+    implementation("androidx.navigation:navigation-compose:2.8.0-beta05")
     //corrutinas
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     //coil images
@@ -86,6 +86,8 @@ dependencies {
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.serialization.gson)
     implementation(libs.ktor.client.logging)
+    //parcelable
+    implementation(libs.kotlin.parcelize.runtime)
 
     //koin injection
     implementation(libs.koin.android)

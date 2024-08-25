@@ -36,7 +36,6 @@ import androidx.navigation.NavController
 import com.example.repositorio.R
 import com.example.repositorio.components.Spinner
 import com.example.repositorio.components.TextInputComponent
-import com.example.repositorio.components.bottomnavigation.ItemsMenu
 import com.example.repositorio.ui.modules.add_file_admin.viewmodel.AuthorsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -49,7 +48,6 @@ fun AddFileRecovery(){
 }
 @Composable
 fun AddFileAdminView(
-    navController: NavController,
     viewModel: AuthorsViewModel = viewModel()
 ) {
     val systemUiController = rememberSystemUiController()
@@ -108,7 +106,9 @@ fun AddFileAdminView(
                             viewModel.onImageSelected(imageName)
                         }
                     }
-                    Button(onClick = { navController.navigate(ItemsMenu.Admin.route) }) {
+                    Button(onClick = {
+                        //navController.navigate(ItemsMenu.Admin.route)
+                    }) {
                         Text(text = "Regresar")
                     }
                     Image(
@@ -181,5 +181,5 @@ fun AddFileAdminView(
 @Composable
 fun AddFilePreView() {
     val context = LocalContext.current
-    AddFileAdminView(navController = NavController(context))
+    AddFileAdminView()
 }
