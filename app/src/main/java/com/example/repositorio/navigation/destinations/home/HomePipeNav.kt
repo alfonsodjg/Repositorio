@@ -6,4 +6,5 @@ sealed class HomePipeNav{
     data object About: HomePipeNav()
     data object Admin: HomePipeNav()
     data object AddFile:HomePipeNav()
+    data object AddAuthor: HomePipeNav()
 }

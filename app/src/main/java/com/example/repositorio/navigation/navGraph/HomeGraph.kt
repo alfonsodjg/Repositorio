@@ -84,6 +84,9 @@ fun NavGraphBuilder.homeGraph(
                 },
                 onGoToAddFile = {
                     navigateTo(HomePipeNav.AddFile)
+                },
+                onGoToAddAuthor = {
+                    navigateTo(HomePipeNav.AddAuthor)
                 }
             )
         }

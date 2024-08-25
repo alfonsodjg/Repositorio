@@ -12,4 +12,6 @@ sealed interface MainNavRoutes {
 
     @Serializable
     object AddFileRoot
+    @Serializable
+    object AddAuthorRoot
 }

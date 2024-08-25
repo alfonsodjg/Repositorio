@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.repositorio.navigation.destinations.MainNavRoutes
+import com.example.repositorio.navigation.destinations.addautor.AddAuthorDestinations
+import com.example.repositorio.navigation.destinations.addautor.AddAuthorPipeNav
 import com.example.repositorio.navigation.destinations.addfile.AddFileDestinations
 import com.example.repositorio.navigation.destinations.addfile.AddFilePipeNav
 import com.example.repositorio.navigation.destinations.home.HomeDestinations
@@ -15,6 +17,7 @@ import com.example.repositorio.navigation.destinations.home.HomePipeNav
 import com.example.repositorio.navigation.destinations.login.LoginDestinations
 import com.example.repositorio.navigation.destinations.login.LoginPipeNav
 import com.example.repositorio.navigation.model.ScaffoldMainModel
+import com.example.repositorio.navigation.navGraph.addAuthorGraph
 import com.example.repositorio.navigation.navGraph.addFileGraph
 import com.example.repositorio.navigation.navGraph.homeGraph
 import com.example.repositorio.navigation.navGraph.loginGraph
@@ -55,30 +58,39 @@ fun MainNav(
         )
         homeGraph(
             onTopBarChange = onTopBarChange,
-            navigateTo = {dest->
-                when(dest){
+            navigateTo = { dest ->
+                when (dest) {
                     is HomePipeNav.About -> {
                         navHostController.navigate(
                             HomeDestinations.About
                         )
                     }
+
                     is HomePipeNav.Admin -> {
                         navHostController.navigate(HomeDestinations.Admin)
                     }
+
                     is HomePipeNav.Home -> {
                         navHostController.navigate(
                             HomeDestinations.Home
                         )
                     }
+
                     is HomePipeNav.Profile -> {
                         navHostController.navigate(
                             HomeDestinations.Profile
                         )
                     }
 
-                   is HomePipeNav.AddFile ->{
+                    is HomePipeNav.AddFile -> {
                         navHostController.navigate(
                             MainNavRoutes.AddFileRoot
+                        )
+                    }
+
+                    HomePipeNav.AddAuthor -> {
+                        navHostController.navigate(
+                            MainNavRoutes.AddAuthorRoot
                         )
                     }
                 }
@@ -86,10 +98,20 @@ fun MainNav(
         )
         addFileGraph(
             onTopBarChange = onTopBarChange,
-            navigateTo = {dest->
-                when(dest){
+            navigateTo = { dest ->
+                when (dest) {
                     AddFilePipeNav.AddFile -> {
                         navHostController.navigate(AddFileDestinations.AddFile)
+                    }
+                }
+            }
+        )
+        addAuthorGraph(
+            onTopBarChange = onTopBarChange,
+            navigateTo = { dest->
+                when (dest) {
+                    AddAuthorPipeNav.AddAuthor -> {
+                        navHostController.navigate(AddAuthorDestinations.AddAuthor)
                     }
                 }
             }

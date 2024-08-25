@@ -33,7 +33,8 @@ fun AdminView(
     onGoToProfile:()->Unit,
     onGoToAbout:()->Unit,
     onGoToAdmin:()->Unit,
-    onGoToAddFile:()->Unit
+    onGoToAddFile:()->Unit,
+    onGoToAddAuthor:()->Unit
 ){
     val systemUiController = rememberSystemUiController()
     val statusBarColor = Color.Yellow
@@ -87,6 +88,7 @@ fun AdminView(
                     }
                     Button(
                         onClick = {
+                            onGoToAddAuthor()
                         },
                         modifier = Modifier.padding(top = 10.dp)
                     ) {
@@ -122,6 +124,7 @@ fun AdminPreView(){
         onGoToProfile = {},
         onGoToAbout = {},
         onGoToAdmin = {},
-        onGoToAddFile = {}
+        onGoToAddFile = {},
+        onGoToAddAuthor = {}
     )
 }

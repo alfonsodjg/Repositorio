@@ -9,13 +9,15 @@ fun AdminRecovery(
     onGoToProfile:()->Unit,
     onGoToAbout:()->Unit,
     onGoToAdmin:()->Unit,
-    onGoToAddFile:()->Unit
+    onGoToAddFile:()->Unit,
+    onGoToAddAuthor:()->Unit
 ){
     AdminView(
         onGoToHome = onGoToHome,
         onGoToProfile = onGoToProfile,
         onGoToAbout = onGoToAbout,
         onGoToAdmin = onGoToAdmin,
-        onGoToAddFile = onGoToAddFile
+        onGoToAddFile = onGoToAddFile,
+        onGoToAddAuthor = onGoToAddAuthor
     )
 }
