@@ -10,5 +10,5 @@ sealed interface LoginDestinations {
     @Serializable
     object CreateAccount
     @Serializable
-    object Home
+    object CreateAccountVerification
 }

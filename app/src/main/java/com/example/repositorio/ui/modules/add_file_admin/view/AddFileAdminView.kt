@@ -32,9 +32,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.repositorio.R
-import com.example.repositorio.components.Spinner
+import com.example.repositorio.components.SpinnerComponent
 import com.example.repositorio.components.TextInputComponent
 import com.example.repositorio.ui.modules.add_file_admin.viewmodel.AuthorsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -151,13 +150,15 @@ fun AddFileAdminView(
                         Text(text = "Fecha de publicacion")
                     }
                     Text(text = "Fecha de publicacion")
-                    Spinner(
+                    SpinnerComponent(
                         text = "Selecciona un autor",
-                        authors = state.value.authors
+                        items = state.value.authors,
+                        labelSelector = {it.name}
                     )
-                    Spinner(
+                    SpinnerComponent(
                         text = "Selecciona tipo de publicacion",
-                        types = state.value.types
+                        items = state.value.types,
+                        labelSelector = {it.name}
                     )
                     Button(onClick = { /*TODO*/ }) {
                         Text(text = "Crear archivo")

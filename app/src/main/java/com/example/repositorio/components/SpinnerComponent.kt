@@ -23,17 +23,19 @@ import com.example.repositorio.ui.modules.add_file_admin.model.PublicTypesModelU
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Spinner(
-    authors: List<AuthorsModelUI> = emptyList(),
+fun <T> SpinnerComponent(
+    items: List<T>,
     text: String,
-    types: List<PublicTypesModelUI> = emptyList()
+    labelSelector: (T) -> String,
+    modifier: Modifier = Modifier,
+    selectedOptionIndex: Int? = null,
+    onOptionSelected: (Int) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOption by remember { mutableStateOf("") }
-    val options = listOf("Option 1", "Option 2", "Option 3")
+    val selectedOption = selectedOptionIndex?.let { items.getOrNull(it) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -42,7 +44,7 @@ fun Spinner(
             onExpandedChange = { expanded = !expanded }
         ) {
             TextField(
-                value = selectedOption,
+                value = selectedOption?.let { labelSelector(it) } ?: "",
                 onValueChange = {},
                 readOnly = true,
                 label = { Text(text = text) },
@@ -58,26 +60,11 @@ fun Spinner(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                authors.forEach { selectionOption ->
+                items.forEachIndexed{index, item ->
                     DropdownMenuItem(
-                        text = { Text(selectionOption.name) },
+                        text = { Text(labelSelector(item)) },
                         onClick = {
-                            selectedOption = selectionOption.name
-                            expanded = false
-                        },
-                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
-                    )
-                }
-            }
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                types.forEach { selectionOption ->
-                    DropdownMenuItem(
-                        text = { Text(selectionOption.name) },
-                        onClick = {
-                            selectedOption = selectionOption.name
+                            onOptionSelected(index)
                             expanded = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
@@ -91,5 +78,28 @@ fun Spinner(
 @Preview(showBackground = true)
 @Composable
 fun SpinnerExamplePreview() {
-    Spinner(text = "Select an option")
+    val authors = listOf(
+        AuthorsModelUI(name = "Author 1"),
+        AuthorsModelUI(name = "Author 2"),
+        AuthorsModelUI(name = "Author 3")
+    )
+
+    val types = listOf(
+        PublicTypesModelUI(name = "Type 1"),
+        PublicTypesModelUI(name = "Type 2"),
+        PublicTypesModelUI(name = "Type 3")
+    )
+
+    Column {
+        SpinnerComponent(
+            items = authors,
+            text = "Select Author",
+            labelSelector = { it.name }
+        )
+        SpinnerComponent(
+            items = types,
+            text = "Select Type",
+            labelSelector = { it.name }
+        )
+    }
 }

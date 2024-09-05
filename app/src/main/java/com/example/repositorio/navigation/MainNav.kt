@@ -49,7 +49,9 @@ fun MainNav(
                             LoginDestinations.CreateAccount
                         )
                     }
-
+                    LoginPipeNav.CreateAccountVerification -> {
+                        navHostController.navigate(LoginDestinations.CreateAccountVerification)
+                    }
                     LoginPipeNav.HomeApp -> {
                         navHostController.navigate(MainNavRoutes.HomeRoot)
                     }

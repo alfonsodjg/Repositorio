@@ -15,11 +15,11 @@ import androidx.compose.ui.unit.dp
 fun TextInputComponent(
     modifier:Modifier,
     placeholder:String,
-    email: String?="",
+    text: String?="",
     onChangeText: (String) -> Unit
 ){
     OutlinedTextField(
-        value = email!! ,
+        value = text?: "" ,
         onValueChange = {onChangeText(it)},
         placeholder = {
             Text(text = placeholder)
