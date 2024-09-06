@@ -5,5 +5,5 @@ import com.example.repositorio.domain.modules.create_account_verification.model.
 import io.ktor.client.statement.HttpResponse
 
 interface ICreateAccountVerification {
-    suspend fun getCreateAccountVerification(code: String): HttpResponse
+    suspend fun getCreateAccountVerification(code: String): ServiceDomainHandler<CreateAccountVerificationDomainModel>
 }

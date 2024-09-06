@@ -5,6 +5,5 @@ import com.example.repositorio.domain.modules.create_account_verification.model.
 
 fun CreateAccountVerificationResponse.toDomain(): CreateAccountVerificationDomainModel =
     CreateAccountVerificationDomainModel(
-        success = success?: "",
-        detail = detail?: ""
+        success = success?: ""
     )

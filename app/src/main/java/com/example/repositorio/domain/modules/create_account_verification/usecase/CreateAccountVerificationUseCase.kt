@@ -8,6 +8,6 @@ import io.ktor.client.statement.HttpResponse
 class CreateAccountVerificationUseCase(
     private val repository: ICreateAccountVerification
 ) {
-    suspend operator fun invoke(code:String): HttpResponse =
+    suspend operator fun invoke(code:String): ServiceDomainHandler<CreateAccountVerificationDomainModel> =
         repository.getCreateAccountVerification(code)
 }

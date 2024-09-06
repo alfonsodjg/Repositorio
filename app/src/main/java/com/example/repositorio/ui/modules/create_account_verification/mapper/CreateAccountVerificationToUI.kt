@@ -5,6 +5,5 @@ import com.example.repositorio.ui.modules.create_account_verification.model.Crea
 
 fun CreateAccountVerificationDomainModel.toUI(): CreateAccountVerificationModelUI =
     CreateAccountVerificationModelUI(
-        success = success,
-        detail = detail
+        success = success
     )

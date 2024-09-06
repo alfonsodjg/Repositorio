@@ -11,13 +11,15 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginRecovery(
     viewModel: LoginViewModel = koinViewModel(),
     onGoToCreateAccount: () -> Unit,
-    onGoToHome: () -> Unit
+    onGoToHome: () -> Unit,
+    onGoToResetPass:()->Unit
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
 
     LoginView(
         onGoToCreateAccount = { onGoToCreateAccount() },
         onGoToHome = { onGoToHome() },
+        onGoToResetPass = onGoToResetPass,
         token = state.value.token.token,
         email = state.value.email,
         password = state.value.password,

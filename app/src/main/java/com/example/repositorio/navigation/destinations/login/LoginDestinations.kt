@@ -11,4 +11,10 @@ sealed interface LoginDestinations {
     object CreateAccount
     @Serializable
     object CreateAccountVerification
+    @Serializable
+    object ResetPassword
+    @Serializable
+    object ResetPasswordVerification
+    @Serializable
+    object ResetPasswordChangePassword
 }

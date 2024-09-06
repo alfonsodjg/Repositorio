@@ -7,4 +7,7 @@ object ApiEndpoint {
     const val GET_CARRERAS = "/api/gestion/lista/carreras/"
     const val GET_CAMPUS = "/api/gestion/lista/campus/"
     const val CREATE_AUTHOR = "/api/gestion/autor/create/"
+    const val RESET_PASSWORD = "/api/auth/password/reset/"
+    const val RESET_PASSWORD_VERIFICATION = "/api/auth/password/reset/verify/"
+    const val CHANGE_PASSWORD = "/api/auth/password/reset/verified/"
 }

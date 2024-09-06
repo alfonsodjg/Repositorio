@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class CreateAccountVerificationResponse(
     @SerializedName("success")
-    val success: String?,
-    @SerializedName("detail")
-    val detail: String?
+    val success: String?
 )
 //Cambias el tipo de datos en domain e UI

@@ -33,6 +33,7 @@ import com.example.repositorio.components.TextInputPassComponent
 fun LoginView(
     onGoToCreateAccount: () -> Unit,
     onGoToHome: () -> Unit,
+    onGoToResetPass: () -> Unit,
     token: String,
     email: String,
     password: String,
@@ -44,7 +45,6 @@ fun LoginView(
     LaunchedEffect(token) {
         token.let {
             if (token.isNotEmpty()) {
-                //navController.navigate("MainView")
                 onGoToHome()
             }
         }
@@ -64,7 +64,14 @@ fun LoginView(
                     updateCredentials = updateCredentials,
                     onLogin = onLogin
                 )
-                Footer()
+                Text(
+                    text = "¿Haz olvidado tu contraseña?",
+                    modifier = Modifier
+                        .padding(top = 30.dp)
+                        .fillMaxWidth()
+                        .clickable { onGoToResetPass() },
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
@@ -140,18 +147,6 @@ fun Body(
     }
 }
 
-@Composable
-fun Footer() {
-    Text(
-        text = "¿Haz olvidado tu contraseña?",
-        modifier = Modifier
-            .padding(top = 30.dp)
-            .fillMaxWidth()
-            .clickable { },
-        textAlign = TextAlign.Center
-    )
-}
-
 @Preview
 @Composable
 fun LoginViewPreview() {
@@ -165,6 +160,7 @@ fun LoginViewPreview() {
         updateCredentials = { _, _ ->
 
         },
-        onLogin = {}
+        onLogin = {},
+        onGoToResetPass = {}
     )
 }

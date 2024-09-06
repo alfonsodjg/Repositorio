@@ -25,13 +25,15 @@ class CreateAccountVerificationViewModel(
     }
     fun onSendCode(code: String){
         viewModelScope.launch {
-            val response = verificationUseCase(code)
-            when(response.status.isSuccess()){
-                true -> {
-                    println("succes: ${response.status.value} y mensaje succes: ${response.status.description}")
+            when(val response = verificationUseCase(code)){
+                is ServiceDomainHandler.Error ->{
+                    println("veamos el error ${response.exception.description}")
                 }
-                false -> {
-                    println("error ${response.status.value} y mensaje ${response.status.description}")
+                is ServiceDomainHandler.Success -> {
+                    println("succes ${response.data.success}")
+                    _viewState.update {
+                        it.updateResponseUI(response.data.toUI())
+                    }
                 }
             }
         }

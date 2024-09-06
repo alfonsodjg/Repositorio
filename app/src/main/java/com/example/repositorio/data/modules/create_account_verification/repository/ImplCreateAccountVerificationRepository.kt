@@ -18,29 +18,17 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.takeFrom
 
 class ImplCreateAccountVerificationRepository: ICreateAccountVerification {
-    override suspend fun getCreateAccountVerification(code: String): HttpResponse {
+    override suspend fun getCreateAccountVerification(code: String): ServiceDomainHandler<CreateAccountVerificationDomainModel> {
        val ktor = KtorConf.KtorClient()
-        /*return try {
+        return try {
             val response: CreateAccountVerificationResponse =
-                ktor.get("${ApiEndpoint.CREATE_ACCOUNT_VERIFICATION}?code=$code").body()
+                ktor.get(CreateAccountVerificationResource.CreateAccountVerification(code = code)).body()
             ServiceDomainHandler.Success(response.toDomain())
         }catch (e: Exception){
             ServiceDomainHandler.Error(
                 e.castErrorToServiceDataError().toServiceErrorDomain()
             )
-        }*/
-        // Construir la URL de manera más segura utilizando URLBuilder
-        val response: HttpResponse = ktor.get {
-            url {
-                takeFrom(ApiEndpoint.CREATE_ACCOUNT_VERIFICATION)
-                parameters.append("code", code) // Evitar concatenación manual
-            }
         }
 
-        val responseBody = response.bodyAsText()
-        println("Response body: $responseBody")
-
-        val mappedResponse: CreateAccountVerificationResponse = response.body()
-        return response
     }
 }

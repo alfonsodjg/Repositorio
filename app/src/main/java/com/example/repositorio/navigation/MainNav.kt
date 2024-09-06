@@ -38,21 +38,30 @@ fun MainNav(
             onTopBarChange = onTopBarChange,
             navigateTo = { dest ->
                 when (dest) {
-                    LoginPipeNav.Login -> {
+                    is LoginPipeNav.Login -> {
                         navHostController.navigate(
                             LoginDestinations.Login
                         )
                     }
 
-                    LoginPipeNav.CreateAccount -> {
+                    is LoginPipeNav.CreateAccount -> {
                         navHostController.navigate(
                             LoginDestinations.CreateAccount
                         )
                     }
-                    LoginPipeNav.CreateAccountVerification -> {
+                    is LoginPipeNav.CreateAccountVerification -> {
                         navHostController.navigate(LoginDestinations.CreateAccountVerification)
                     }
-                    LoginPipeNav.HomeApp -> {
+                    is LoginPipeNav.ResetPassword->{
+                        navHostController.navigate(LoginDestinations.ResetPassword)
+                    }
+                    is LoginPipeNav.ResetPasswordVerification->{
+                        navHostController.navigate(LoginDestinations.ResetPasswordVerification)
+                    }
+                    is LoginPipeNav.ResetPasswordChangePassword->{
+                        navHostController.navigate(LoginDestinations.ResetPasswordChangePassword)
+                    }
+                    is LoginPipeNav.HomeApp -> {
                         navHostController.navigate(MainNavRoutes.HomeRoot)
                     }
                 }
