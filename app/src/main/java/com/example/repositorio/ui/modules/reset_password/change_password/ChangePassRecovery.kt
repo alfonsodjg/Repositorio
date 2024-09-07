@@ -1,6 +1,7 @@
 package com.example.repositorio.ui.modules.reset_password.change_password
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.repositorio.ui.core.utils.SaveCodeToChangePassword
 import com.example.repositorio.ui.modules.reset_password.change_password.view.ChangePasswordView
@@ -9,10 +10,14 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ChangePassRecovery(
-    viewModel: ChangePasswordViewModel = koinViewModel()
+    viewModel: ChangePasswordViewModel = koinViewModel(),
+    onTopBarChange:(String)->Unit
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
     println("Codigo que se envio al correo ${SaveCodeToChangePassword.code}")
+    LaunchedEffect(Unit){
+        onTopBarChange("Recuperar contraseña")
+    }
     ChangePasswordView(
         password = state.value.password,
         updateRequest = { password ->

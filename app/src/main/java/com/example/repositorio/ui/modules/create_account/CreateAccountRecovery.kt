@@ -10,10 +10,14 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CreateAccountRecovery(
     viewModel: CreateAccountViewModel = koinViewModel(),
-    goToVerification:()->Unit
+    goToVerification:()->Unit,
+    onTopBarChange:(String)->Unit
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit){
+        onTopBarChange("Crear cuenta")
+    }
     CreateAccountView(
         email = state.value.email,
         password = state.value.password,

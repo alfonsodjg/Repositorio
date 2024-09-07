@@ -1,5 +1,6 @@
 package com.example.repositorio.navigation.navGraph
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -7,6 +8,8 @@ import com.example.repositorio.navigation.destinations.MainNavRoutes
 import com.example.repositorio.navigation.destinations.login.LoginDestinations
 import com.example.repositorio.navigation.destinations.login.LoginPipeNav
 import com.example.repositorio.navigation.model.ScaffoldMainModel
+import com.example.repositorio.navigation.model.TopBarUI
+import com.example.repositorio.navigation.utils.ScaffoldDefaults
 import com.example.repositorio.ui.modules.create_account.CreateAccountRecovery
 import com.example.repositorio.ui.modules.create_account_verification.CreateAccountVerificationRecovery
 import com.example.repositorio.ui.modules.login.LoginRecovery
@@ -23,9 +26,13 @@ fun NavGraphBuilder.loginGraph(
         startDestination = startDestination
     ) {
         composable<LoginDestinations.Login> {
+            LaunchedEffect(Unit) {
+                onTopBarChange(ScaffoldMainModel(topBar = TopBarUI.NoActionBar))
+            }
             LoginRecovery(
                 onGoToCreateAccount = {
-                    navigateTo(LoginPipeNav.CreateAccount) },
+                    navigateTo(LoginPipeNav.CreateAccount)
+                },
                 onGoToHome = {
                     navigateTo(LoginPipeNav.HomeApp)
                 },
@@ -36,16 +43,47 @@ fun NavGraphBuilder.loginGraph(
         }
         composable<LoginDestinations.CreateAccount> {
             CreateAccountRecovery(
+                onTopBarChange = {
+                    onTopBarChange(
+                        ScaffoldDefaults.navigateBar(
+                            title = it,
+                            enableActionIcon = true,
+                            imgLightSrc = "",
+                            imgDarkSrc = ""
+                        )
+                    )
+                },
                 goToVerification = {
                     navigateTo(LoginPipeNav.CreateAccountVerification)
                 }
             )
         }
         composable<LoginDestinations.CreateAccountVerification> {
-            CreateAccountVerificationRecovery()
+            CreateAccountVerificationRecovery(
+                onTopBarChange = {
+                    onTopBarChange(
+                        ScaffoldDefaults.navigateBar(
+                            title = it,
+                            enableActionIcon = true,
+                            imgLightSrc = "",
+                            imgDarkSrc = ""
+                        )
+                    )
+                }
+            )
         }
         composable<LoginDestinations.ResetPassword> {
             ResetPasswordRecovery(
+                onTopBarChange = {
+                    onTopBarChange(
+                        ScaffoldDefaults.navigateBar(
+                            title = it,
+                            enableActionIcon = true,
+                            imgLightSrc = "",
+                            imgDarkSrc = ""
+                        )
+                    )
+                },
                 goToVerification = {
                     navigateTo(LoginPipeNav.ResetPasswordVerification)
                 }
@@ -53,13 +91,34 @@ fun NavGraphBuilder.loginGraph(
         }
         composable<LoginDestinations.ResetPasswordVerification> {
             ResetPasswordVerificationRecovery(
+                onTopBarChange = {
+                    onTopBarChange(
+                        ScaffoldDefaults.navigateBar(
+                            title = it,
+                            enableActionIcon = true,
+                            imgLightSrc = "",
+                            imgDarkSrc = ""
+                        )
+                    )
+                },
                 goToChangePass = {
                     navigateTo(LoginPipeNav.ResetPasswordChangePassword)
                 }
             )
         }
         composable<LoginDestinations.ResetPasswordChangePassword> {
-            ChangePassRecovery()
+            ChangePassRecovery(
+                onTopBarChange = {
+                    onTopBarChange(
+                        ScaffoldDefaults.navigateBar(
+                            title = it,
+                            enableActionIcon = true,
+                            imgLightSrc = "",
+                            imgDarkSrc = ""
+                        )
+                    )
+                }
+            )
         }
     }
 }

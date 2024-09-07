@@ -5,7 +5,7 @@ data class BottomBarUI(
 )
 sealed class TopBarUI{
     class NavigateBar(
-        val title: String,
+        val title: String = "",
         val enabledIcon: Boolean = true,
         val imgLight: String = "",
         val imgDark: String = ""
@@ -14,5 +14,5 @@ sealed class TopBarUI{
 }
 data class ScaffoldMainModel(
     val topBar: TopBarUI,
-    val bottomBar: BottomBarUI
+    val bottomBar: BottomBarUI = BottomBarUI()
 )

@@ -10,10 +10,12 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ResetPasswordRecovery(
     viewModel: ResetPassViewModel = koinViewModel(),
-    goToVerification:()->Unit
+    goToVerification:()->Unit,
+    onTopBarChange:(String)->Unit
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
     LaunchedEffect(state.value.success){
+        onTopBarChange("Recuperar contraseña")
         if (state.value.success){
             goToVerification()
         }
