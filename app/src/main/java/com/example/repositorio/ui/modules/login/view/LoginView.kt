@@ -34,6 +34,7 @@ import com.example.repositorio.R
 import com.example.repositorio.components.ErrorComponent
 import com.example.repositorio.components.TextInputComponent
 import com.example.repositorio.components.TextInputPassComponent
+import com.example.repositorio.ui.theme.AppTheme
 
 @Composable
 fun LoginView(
@@ -60,7 +61,7 @@ fun LoginView(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(state = rememberScrollState())
-            .background(Color.White)
+            .background(AppTheme.colors.containerColor)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),

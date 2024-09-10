@@ -35,7 +35,7 @@ class LoginViewModel(
                     when(response.exception.code){
                         401-> {
                             _viewState.update {
-                                it.updateError(error = ErrorUi.ErrorServer)
+                                it.updateError(error = ErrorUi.ErrorCredentials)
                             }
                         }
                         500-> {

@@ -44,7 +44,9 @@ fun LoginRecovery(
         showError = showError
     )
     when (state.value.error) {
-        ErrorUi.ErrorCredentials -> {}
+        ErrorUi.ErrorCredentials -> {
+            showError.value = true
+        }
         ErrorUi.ErrorServer -> {
             showBottomSheet.value = true
         }
