@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.repositorio.R
 
 @Preview(
@@ -63,13 +64,14 @@ fun TopBarScaffoldComponent(
                         focusManager.clearFocus()
                     },
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.W800
+                fontWeight = FontWeight.W800,
+                fontSize = 14.sp
             )
         },
         navigationIcon = {
                          IconButton(onClick = { onBackClick() }) {
                              Image(
-                                 modifier = Modifier.size(24.dp),
+                                 modifier = Modifier.size(20.dp),
                                  painter = painterResource(id = R.drawable.ic_back),
                                  contentDescription = null
                              )

@@ -88,6 +88,10 @@ dependencies {
     implementation(libs.ktor.client.logging)
     //parcelable
     implementation(libs.kotlin.parcelize.runtime)
+    //ConstraintLayout compose
+    implementation(libs.constraintlayout.compose)
+    //lottie para loader custom
+    implementation(libs.lottie.compose)
 
     //koin injection
     implementation(libs.koin.android)

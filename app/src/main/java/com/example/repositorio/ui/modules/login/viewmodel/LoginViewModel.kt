@@ -6,6 +6,7 @@ import com.example.repositorio.core.utils.SaveToken
 import com.example.repositorio.domain.core.handler.ServiceDomainHandler
 import com.example.repositorio.domain.modules.login_auth.usecase.GetLoginAuthUseCase
 import com.example.repositorio.ui.modules.login.mapper.toUI
+import com.example.repositorio.ui.modules.login.model.ErrorUi
 import com.example.repositorio.ui.modules.login.viewstate.LoginViewState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,8 +33,16 @@ class LoginViewModel(
                 is ServiceDomainHandler.Error -> {
                     println("Error en viewmodel ${response.exception.code} y ${response.exception.message}")
                     when(response.exception.code){
-                        401-> println("Esta sucediendo el error 401")
-                        500-> println("Nada por aqui")
+                        401-> {
+                            _viewState.update {
+                                it.updateError(error = ErrorUi.ErrorServer)
+                            }
+                        }
+                        500-> {
+                            _viewState.update {
+                                it.updateError(error = ErrorUi.ErrorServer)
+                            }
+                        }
                     }
                 }
                 is ServiceDomainHandler.Success -> {
