@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.repositorio.components.AlertDialogComponent
 import com.example.repositorio.components.BottomSheetComponent
 import com.example.repositorio.ui.modules.login.model.ErrorUi
 import com.example.repositorio.ui.modules.login.view.LoginView
@@ -27,6 +28,9 @@ fun LoginRecovery(
     val showBottomSheet = remember {
         mutableStateOf(false)
     }
+    val showAlertDialog = remember {
+        mutableStateOf(false)
+    }
 
     LoginView(
         onGoToCreateAccount = { onGoToCreateAccount() },
@@ -41,25 +45,43 @@ fun LoginRecovery(
         onLogin = {
             viewModel.onLogin(state.value.email, state.value.password)
         },
-        showError = showError
+        showError = showError,
+        isEnabledButton = state.value.isEnabledButton
     )
     when (state.value.error) {
         ErrorUi.ErrorCredentials -> {
             showError.value = true
         }
+
         ErrorUi.ErrorServer -> {
             showBottomSheet.value = true
+            BottomSheetComponent(
+                title = "Servicio no disponible",
+                description = "Lo sentimos por el momento el servicio no esta disponible, contacta a tu administrador para mas informacion.",
+                textButton = "Cerrar",
+                onDismiss = {
+                    showBottomSheet.value = false
+                    viewModel.clearError()
+                },
+                onGoInit = {},
+                showErrorBottomSheet = showBottomSheet
+            )
         }
 
-        ErrorUi.None -> {
+        ErrorUi.ErrorRequest -> {
+            showError.value = false
+            showAlertDialog.value = true
+            AlertDialogComponent(
+                title = "Ocurrio un error",
+                description = "El correo que ingresaste no esta registrado",
+                onDismiss = {
+                    showAlertDialog.value = false
+                    viewModel.clearError()
+                },
+                showAlertDialog = showAlertDialog
+            )
         }
-    }
-    if (showBottomSheet.value) {
-        BottomSheetComponent(
-            title = "Servicio no disponible",
-            description = "Lo sentimos por el momento el servicio no esta disponible, contacta a tu administrador para mas informacion.",
-            textButton = "Cerrar",
-            onDismiss = { showBottomSheet.value = false }
-        ) {}
+
+        ErrorUi.None -> {}
     }
 }

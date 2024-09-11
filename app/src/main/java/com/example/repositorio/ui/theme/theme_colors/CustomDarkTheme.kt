@@ -5,5 +5,6 @@ import androidx.compose.ui.graphics.Color
 fun getDarkColors() =
     StyleColors(
         textColor = Color.White,
-        containerColor = Color.Black
+        containerColor = Color.Black,
+        colorLogo = Color.White
     )

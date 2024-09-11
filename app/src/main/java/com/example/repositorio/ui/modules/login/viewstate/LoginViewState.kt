@@ -7,12 +7,14 @@ data class LoginViewState(
     val token: LoginModelUI = LoginModelUI(),
     var email: String = "",
     var password: String = "",
+    val isEnabledButton: Boolean = false,
     val error: ErrorUi = ErrorUi.None
 ){
     fun updateCredentials(
         email: String,
-        password: String
-    ) = copy(email = email, password = password)
+        password: String,
+        isEnabledButton: Boolean
+    ) = copy(email = email, password = password, isEnabledButton = isEnabledButton)
 
     fun updateToken(
         token: LoginModelUI

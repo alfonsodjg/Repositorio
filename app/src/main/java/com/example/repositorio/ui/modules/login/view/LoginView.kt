@@ -3,6 +3,7 @@ package com.example.repositorio.ui.modules.login.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,9 +48,12 @@ fun LoginView(
     password: String,
     updateCredentials: (String, String) -> Unit,
     onLogin: () -> Unit,
-    showError: MutableState<Boolean>
+    showError: MutableState<Boolean>,
+    isEnabledButton: Boolean
 ) {
     val context = LocalContext.current
+    val isEmailValid = remember { mutableStateOf(true) }
+    val hasInteracted = remember { mutableStateOf(false) }
 
     LaunchedEffect(token) {
         token.let {
@@ -68,9 +73,10 @@ fun LoginView(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.newlogo),
+                painter = painterResource(id = R.drawable.itsz_logo),
                 contentDescription = null,
-                modifier = Modifier.size(200.dp)
+                modifier = Modifier.size(200.dp),
+                colorFilter = ColorFilter.tint(AppTheme.colors.colorLogo)
             )
         }
         Text(
@@ -80,28 +86,37 @@ fun LoginView(
             fontSize = 60.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            color = Color.Black
+            color = AppTheme.colors.textColor
         )
         Text(
             text = "Al repositorio del Instituto Tecnologico Superior de Zongolica",
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            color = Color.Black
+            color = AppTheme.colors.textColor
         )
 
         TextInputComponent(
             modifier = Modifier,
-            placeholder = "Ingresa tu contraseña",
+            placeholder = "Ingresa tu email",
             text = email,
-            onChangeText = { updateCredentials(it, password) }
+            onChangeText = {
+                updateCredentials(it, password)
+                hasInteracted.value = true
+            },
+            isEmailValid = { isValid ->
+                isEmailValid.value = isValid
+            }
         )
+        if (hasInteracted.value && !isEmailValid.value){
+            ErrorComponent(error = "Correo no valido")
+        }
         TextInputPassComponent(
             modifier = Modifier,
             placeholder = "Ingresa tu contraseña",
             password = password,
             onChangeText = { updateCredentials(email, it) }
         )
-        if (showError.value){
+        if (showError.value && email.isNotEmpty() && password.isNotEmpty()){
             ErrorComponent(error = "Verifica tus credenciales e intentalo de nuevo")
         }
         Button(
@@ -109,7 +124,8 @@ fun LoginView(
             modifier = Modifier
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp)
                 .fillMaxWidth()
-                .height(45.dp)
+                .height(45.dp),
+            enabled = isEnabledButton
         ) {
             Text(text = "Iniciar sesion")
         }
@@ -128,7 +144,8 @@ fun LoginView(
                 .padding(top = 30.dp)
                 .fillMaxWidth()
                 .clickable { onGoToResetPass() },
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = AppTheme.colors.textColor
         )
     }
 }
@@ -136,7 +153,6 @@ fun LoginView(
 @Preview
 @Composable
 fun LoginViewPreview() {
-    val navController = rememberNavController()
     LoginView(
         onGoToCreateAccount = {},
         onGoToHome = {},
@@ -150,6 +166,7 @@ fun LoginViewPreview() {
         onLogin = {},
         showError = remember {
             mutableStateOf(false)
-        }
+        },
+        isEnabledButton = false
     )
 }

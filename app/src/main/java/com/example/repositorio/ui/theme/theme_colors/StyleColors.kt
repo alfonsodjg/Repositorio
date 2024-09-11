@@ -6,5 +6,6 @@ import androidx.compose.ui.graphics.Color
 @Immutable
 data class StyleColors (
     val textColor: Color = Color.Unspecified,
-    val containerColor : Color = Color.Unspecified
+    val containerColor : Color = Color.Unspecified,
+    val colorLogo:Color = Color.Unspecified
 )

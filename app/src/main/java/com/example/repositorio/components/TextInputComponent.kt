@@ -13,14 +13,19 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TextInputComponent(
-    modifier:Modifier,
-    placeholder:String,
-    text: String?="",
-    onChangeText: (String) -> Unit
-){
+    modifier: Modifier,
+    placeholder: String,
+    text: String? = "",
+    onChangeText: (String) -> Unit,
+    isEmailValid: (Boolean) -> Unit = {}
+) {
+    val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
     OutlinedTextField(
-        value = text?: "" ,
-        onValueChange = {onChangeText(it)},
+        value = text ?: "",
+        onValueChange = {
+            onChangeText(it)
+            isEmailValid(emailRegex.matches(it))
+        },
         placeholder = {
             Text(text = placeholder)
         },
@@ -37,6 +42,6 @@ fun TextInputComponent(
     backgroundColor = 0xFFFFFFFF
 )
 @Composable
-fun TextInputComponentPreView(){
+fun TextInputComponentPreView() {
     TextInputComponent(modifier = Modifier, "Ingresa tu contraseña", "", onChangeText = {})
 }

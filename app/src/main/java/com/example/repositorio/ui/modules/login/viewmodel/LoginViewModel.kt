@@ -23,7 +23,8 @@ class LoginViewModel(
         _viewState.update {
             it.updateCredentials(
                 email = email,
-                password = password
+                password = password,
+                isEnabledButton = email.isNotEmpty() && password.isNotEmpty()
             )
         }
     }
@@ -33,6 +34,11 @@ class LoginViewModel(
                 is ServiceDomainHandler.Error -> {
                     println("Error en viewmodel ${response.exception.code} y ${response.exception.message}")
                     when(response.exception.code){
+                        400->{
+                            _viewState.update {
+                                it.updateError(error = ErrorUi.ErrorRequest)
+                            }
+                        }
                         401-> {
                             _viewState.update {
                                 it.updateError(error = ErrorUi.ErrorCredentials)
@@ -56,6 +62,11 @@ class LoginViewModel(
                     }
                 }
             }
+        }
+    }
+    fun clearError() {
+        _viewState.update {
+            it.updateError(error = ErrorUi.None)
         }
     }
 }
