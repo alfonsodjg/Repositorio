@@ -1,7 +1,9 @@
 package com.example.repositorio.ui.modules.reset_password.email_detail
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.repositorio.navigation.main.DialogEvents
@@ -14,7 +16,8 @@ import org.koin.androidx.compose.koinViewModel
 fun ResetPasswordRecovery(
     viewModel: ResetPassViewModel = koinViewModel(),
     goToVerification: () -> Unit,
-    onTopBarChange: (String) -> Unit
+    onTopBarChange: (String) -> Unit,
+    showAlertBottomSheet: MutableState<Boolean>
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
     val sharedFlow = viewModel.sharedFlow.collectAsState(initial = SingleActionUI.None)
@@ -34,4 +37,8 @@ fun ResetPasswordRecovery(
         }
     )
     DialogEvents(singleActionUI = sharedFlow.value)
+
+    BackHandler(enabled = true) {
+        showAlertBottomSheet.value = true
+    }
 }

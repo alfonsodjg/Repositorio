@@ -1,7 +1,9 @@
 package com.example.repositorio.ui.modules.reset_password.verification_code
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.repositorio.ui.modules.reset_password.verification_code.view.ResetPassVerificationView
 import com.example.repositorio.ui.modules.reset_password.verification_code.viewmodel.VerificationCodeViewModel
@@ -12,7 +14,8 @@ import org.koin.androidx.compose.koinViewModel
 fun ResetPasswordVerificationRecovery(
     viewModel: VerificationCodeViewModel = koinViewModel(),
     goToChangePass:()->Unit,
-    onTopBarChange:(String)->Unit
+    onTopBarChange:(String)->Unit,
+    showAlertBottomSheet: MutableState<Boolean>
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
     LaunchedEffect(state.value.isSuccess){
@@ -32,4 +35,7 @@ fun ResetPasswordVerificationRecovery(
             viewModel.onSendCode(state.value.code)
         }
     )
+    BackHandler(enabled = true) {
+        showAlertBottomSheet.value = true
+    }
 }

@@ -13,14 +13,16 @@ object ScaffoldDefaults {
         title: String,
         enableActionIcon: Boolean,
         imgLightSrc: String,
-        imgDarkSrc: String
+        imgDarkSrc: String,
+        showExitDialog: Boolean = false
     ) =
         default.copy(
             topBar = TopBarUI.NavigateBar(
                 title = title,
                 enabledIcon = enableActionIcon,
                 imgLight = imgLightSrc,
-                imgDark = imgDarkSrc
+                imgDark = imgDarkSrc,
+                showExitDialog = showExitDialog
             )
         )
 

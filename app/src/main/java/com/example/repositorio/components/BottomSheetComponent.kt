@@ -2,9 +2,11 @@ package com.example.repositorio.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -18,6 +20,7 @@ import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.repositorio.ui.theme.AppTheme
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Preview(
@@ -48,10 +52,11 @@ fun BottomPreView() {
         description = "Por el momento el servicio no esta disponible, intentalo mas tarde",
         textButton = "Cerrar",
         onDismiss = {},
-        onGoInit = {},
+        onGoInitHome = {},
         showErrorBottomSheet = remember {
             mutableStateOf(true)
-        }
+        },
+        isVisibleButtonGoHome = true
     )
 }
 
@@ -61,11 +66,12 @@ fun BottomSheetComponent(
     title: String,
     description: String,
     textButton: String,
-    onGoInit: () -> Unit,
+    onGoInitHome: () -> Unit,
     onDismiss: () -> Unit,
-    showErrorBottomSheet: MutableState<Boolean>
+    showErrorBottomSheet: MutableState<Boolean>,
+    isVisibleButtonGoHome: Boolean = false
 ) {
-    if(showErrorBottomSheet.value){
+    if (showErrorBottomSheet.value) {
         Dialog(
             onDismissRequest = onDismiss,
             properties = DialogProperties(
@@ -107,28 +113,52 @@ fun BottomSheetComponent(
                                 modifier = Modifier.padding(top = 24.dp),
                                 color = Color.Black
                             )
-                            Box(
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .width(100.dp)
                             ) {
-                                Button(
+                                var paddingDynamic = 0.dp
+                                OutlinedButton(
                                     onClick = {
-                                        //onGoHome()
                                         onDismiss()
                                     },
                                     modifier = Modifier
                                         .height(85.dp)
-                                        .padding(top = 15.dp, bottom = 20.dp)
-                                        .fillMaxWidth(),
+                                        .padding(top = 15.dp, bottom = 20.dp, end = paddingDynamic)
+                                        .weight(1f),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.Blue,
+                                        containerColor = Color.White,
                                         contentColor = Color.Black
-                                    )
+                                    ),
+                                    border = BorderStroke(1.dp, Color.Black)
                                 ) {
-                                    Text(text = textButton,
-                                        color = Color.White)
+                                    Text(
+                                        text = textButton,
+                                        color = Color.Black
+                                    )
+                                }
+                                if (isVisibleButtonGoHome) {
+                                    paddingDynamic = 10.dp
+                                    Button(
+                                        onClick = {
+                                            onGoInitHome()
+                                        },
+                                        modifier = Modifier
+                                            .height(85.dp)
+                                            .padding(top = 15.dp, bottom = 20.dp, start = paddingDynamic)
+                                            .weight(1f),
+                                        shape = RoundedCornerShape(10.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = Color.Blue,
+                                            contentColor = Color.Black
+                                        )
+                                    ) {
+                                        Text(
+                                            text = "Cancelar",
+                                            color = Color.White
+                                        )
+                                    }
                                 }
                             }
                             Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))

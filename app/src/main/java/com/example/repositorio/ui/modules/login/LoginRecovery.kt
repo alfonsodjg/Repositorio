@@ -63,7 +63,7 @@ fun LoginRecovery(
                     showBottomSheet.value = false
                     viewModel.clearError()
                 },
-                onGoInit = {},
+                onGoInitHome = {},
                 showErrorBottomSheet = showBottomSheet
             )
         }

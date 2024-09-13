@@ -1,5 +1,6 @@
 package com.example.repositorio.navigation
 
+import android.os.Build
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -27,7 +28,8 @@ fun MainNav(
     navHostController: NavHostController,
     parentDestination: Any = MainNavRoutes.LoginRoot,
     innerPadding: PaddingValues,
-    onTopBarChange: (ScaffoldMainModel) -> Unit
+    onTopBarChange: (ScaffoldMainModel) -> Unit,
+    showAlertBottomSheet: MutableState<Boolean>
 ) {
     NavHost(
         navController = navHostController,
@@ -35,6 +37,7 @@ fun MainNav(
         Modifier.padding(innerPadding)
     ) {
         loginGraph(
+            showAlertBottomSheet= showAlertBottomSheet,
             onTopBarChange = onTopBarChange,
             navigateTo = { dest ->
                 when (dest) {

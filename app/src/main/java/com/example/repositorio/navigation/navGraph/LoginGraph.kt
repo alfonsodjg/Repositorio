@@ -1,6 +1,9 @@
 package com.example.repositorio.navigation.navGraph
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -17,10 +20,12 @@ import com.example.repositorio.ui.modules.reset_password.change_password.ChangeP
 import com.example.repositorio.ui.modules.reset_password.email_detail.ResetPasswordRecovery
 import com.example.repositorio.ui.modules.reset_password.verification_code.ResetPasswordVerificationRecovery
 
+@RequiresApi(Build.VERSION_CODES.Q)
 fun NavGraphBuilder.loginGraph(
     startDestination: Any = LoginDestinations.Login,
-    onTopBarChange: (ScaffoldMainModel) -> Unit,
-    navigateTo: (LoginPipeNav) -> Unit
+    onTopBarChange: (ScaffoldMainModel) -> Unit = {},
+    navigateTo: (LoginPipeNav) -> Unit,
+    showAlertBottomSheet: MutableState<Boolean>
 ) {
     navigation<MainNavRoutes.LoginRoot>(
         startDestination = startDestination
@@ -49,13 +54,15 @@ fun NavGraphBuilder.loginGraph(
                             title = it,
                             enableActionIcon = true,
                             imgLightSrc = "",
-                            imgDarkSrc = ""
+                            imgDarkSrc = "",
+                            showExitDialog = false
                         )
                     )
                 },
                 goToVerification = {
                     navigateTo(LoginPipeNav.CreateAccountVerification)
-                }
+                },
+                showAlertBottomSheet = showAlertBottomSheet
             )
         }
         composable<LoginDestinations.CreateAccountVerification> {
@@ -66,10 +73,12 @@ fun NavGraphBuilder.loginGraph(
                             title = it,
                             enableActionIcon = true,
                             imgLightSrc = "",
-                            imgDarkSrc = ""
+                            imgDarkSrc = "",
+                            showExitDialog = true
                         )
                     )
-                }
+                },
+                showAlertBottomSheet = showAlertBottomSheet
             )
         }
         composable<LoginDestinations.ResetPassword> {
@@ -80,13 +89,15 @@ fun NavGraphBuilder.loginGraph(
                             title = it,
                             enableActionIcon = true,
                             imgLightSrc = "",
-                            imgDarkSrc = ""
+                            imgDarkSrc = "",
+                            showExitDialog = false
                         )
                     )
                 },
                 goToVerification = {
                     navigateTo(LoginPipeNav.ResetPasswordVerification)
-                }
+                },
+                showAlertBottomSheet = showAlertBottomSheet
             )
         }
         composable<LoginDestinations.ResetPasswordVerification> {
@@ -97,13 +108,15 @@ fun NavGraphBuilder.loginGraph(
                             title = it,
                             enableActionIcon = true,
                             imgLightSrc = "",
-                            imgDarkSrc = ""
+                            imgDarkSrc = "",
+                            showExitDialog = true
                         )
                     )
                 },
                 goToChangePass = {
                     navigateTo(LoginPipeNav.ResetPasswordChangePassword)
-                }
+                },
+                showAlertBottomSheet = showAlertBottomSheet
             )
         }
         composable<LoginDestinations.ResetPasswordChangePassword> {
@@ -114,10 +127,12 @@ fun NavGraphBuilder.loginGraph(
                             title = it,
                             enableActionIcon = true,
                             imgLightSrc = "",
-                            imgDarkSrc = ""
+                            imgDarkSrc = "",
+                            showExitDialog = true
                         )
                     )
-                }
+                },
+                showAlertBottomSheet = showAlertBottomSheet
             )
         }
     }

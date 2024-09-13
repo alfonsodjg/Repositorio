@@ -8,7 +8,8 @@ sealed class TopBarUI{
         val title: String = "",
         val enabledIcon: Boolean = true,
         val imgLight: String = "",
-        val imgDark: String = ""
+        val imgDark: String = "",
+        val showExitDialog: Boolean = false
     ): TopBarUI()
     data object NoActionBar: TopBarUI()
 }

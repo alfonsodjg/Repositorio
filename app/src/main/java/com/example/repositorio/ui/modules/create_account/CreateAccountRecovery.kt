@@ -1,7 +1,9 @@
 package com.example.repositorio.ui.modules.create_account
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.repositorio.ui.modules.create_account.view.CreateAccountView
 import com.example.repositorio.ui.modules.create_account.viewmodel.CreateAccountViewModel
@@ -11,7 +13,8 @@ import org.koin.androidx.compose.koinViewModel
 fun CreateAccountRecovery(
     viewModel: CreateAccountViewModel = koinViewModel(),
     goToVerification:()->Unit,
-    onTopBarChange:(String)->Unit
+    onTopBarChange:(String)->Unit,
+    showAlertBottomSheet: MutableState<Boolean>
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
 
@@ -48,4 +51,7 @@ fun CreateAccountRecovery(
         isCreatedAccount = state.value.isCreatedAccount,
         goToVerification = goToVerification
     )
+    BackHandler(enabled = true) {
+        showAlertBottomSheet.value = true
+    }
 }
