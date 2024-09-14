@@ -10,10 +10,12 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AddAuthorRecovery(
-    viewModel: AddAuthorViewModel = koinViewModel()
+    viewModel: AddAuthorViewModel = koinViewModel(),
+    onTopBarChange:(String)->Unit
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
+        onTopBarChange("Agregar autor")
         viewModel.onGetCarreras()
     }
 

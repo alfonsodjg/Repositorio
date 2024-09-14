@@ -118,13 +118,13 @@ fun LoginView(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 20.dp),
+                    .padding(bottom = 15.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.itsz_logo),
                     contentDescription = null,
-                    modifier = Modifier.size(200.dp),
+                    modifier = Modifier.size(190.dp),
                     colorFilter = ColorFilter.tint(Color.White)
                 )
             }
@@ -132,8 +132,8 @@ fun LoginView(
                 text = "BIENVENIDO",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 15.dp),
-                fontSize = 40.sp,
+                    .padding(bottom = 10.dp),
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = Color.White
@@ -142,10 +142,10 @@ fun LoginView(
                 text = "Al repositorio del Instituto Tecnologico Superior de Zongolica",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 20.dp),
+                    .padding(bottom = 15.dp),
                 textAlign = TextAlign.Center,
                 color = Color.White,
-                fontSize = 15.sp
+                fontSize = 14.sp
             )
         }
         Surface(
@@ -159,7 +159,7 @@ fun LoginView(
             color = AppTheme.colors.colorFooter
         ) {
             Column(
-                modifier = Modifier.padding(top = 20.dp)
+                modifier = Modifier.padding(top =10.dp)
             ) {
                 TextInputComponent(
                     modifier = Modifier,
@@ -189,26 +189,27 @@ fun LoginView(
                 Button(
                     onClick = { onLogin() },
                     modifier = Modifier
-                        .padding(start = 30.dp, end = 30.dp, top = 20.dp)
+                        .padding(start = 30.dp, end = 30.dp, top = 15.dp)
                         .fillMaxWidth()
                         .height(45.dp),
                     enabled = isEnabledButton,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = AppTheme.colors.colorLogin,
                         contentColor = Color.White
-                    )
+                    ),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(text = "Iniciar sesion")
                 }
                 Text(
                     text = "¿Haz olvidado tu contraseña?",
                     modifier = Modifier
-                        .padding(top = 20.dp, bottom = 20.dp)
+                        .padding(top = 10.dp, bottom = 20.dp)
                         .fillMaxWidth()
                         .clickable { onGoToResetPass() },
                     textAlign = TextAlign.Center,
                     color = AppTheme.colors.textColor,
-                    fontSize = 14.sp
+                    fontSize = 13.sp
                 )
             }
         }

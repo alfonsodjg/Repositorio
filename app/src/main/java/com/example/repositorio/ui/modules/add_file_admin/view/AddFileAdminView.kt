@@ -11,14 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -39,12 +42,19 @@ import com.example.repositorio.ui.modules.add_file_admin.viewmodel.AuthorsViewMo
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.repositorio.ui.core.utils.getFileName
+import com.example.repositorio.ui.theme.AppTheme
 
 
 @Composable
-fun AddFileRecovery(){
-
+fun AddFileRecovery(
+    onTopBarChange:(String)->Unit
+) {
+    LaunchedEffect(Unit){
+        onTopBarChange("Agregar archivo")
+    }
+    AddFileAdminView()
 }
+
 @Composable
 fun AddFileAdminView(
     viewModel: AuthorsViewModel = viewModel()
@@ -63,7 +73,7 @@ fun AddFileAdminView(
             darkIcons = true
         )
     }
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.onAuthorList()
         viewModel.onTypes()
     }
@@ -71,104 +81,184 @@ fun AddFileAdminView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(AppTheme.colors.containerColor)
     ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 20.dp, horizontal = 20.dp),
-            color = Color.Blue,
+            color = AppTheme.colors.cardColor,
             shape = RoundedCornerShape(10.dp)
         ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+            Column(
+                modifier = Modifier
+                    .verticalScroll(state = rememberScrollState())
+                    .padding(bottom = 100.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
+                val pdfPickerLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.OpenDocument()
+                ) { uri: Uri? ->
+                    uri?.let {
+                        val fileName = uri.getFileName(context)
+                        viewModel.onPdfSelected(fileName)
+                    }
+                }
+                val imagePickerLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.OpenDocument()
+                ) { uri: Uri? ->
+                    uri?.let {
+                        val imageName = uri.getFileName(context)
+                        viewModel.onImageSelected(imageName)
+                    }
+                }
+                Box(
                     modifier = Modifier
-                        .verticalScroll(state = rememberScrollState())
-                        .padding(bottom = 100.dp)
+                        .padding(top = 10.dp)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    val pdfPickerLauncher = rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.OpenDocument()
-                    ) { uri: Uri? ->
-                        uri?.let {
-                            val fileName = uri.getFileName(context)
-                            viewModel.onPdfSelected(fileName)
-                        }
-                    }
-                    val imagePickerLauncher = rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.OpenDocument()
-                    ) { uri: Uri? ->
-                        uri?.let {
-                            val imageName = uri.getFileName(context)
-                            viewModel.onImageSelected(imageName)
-                        }
-                    }
-                    Button(onClick = {
-                        //navController.navigate(ItemsMenu.Admin.route)
-                    }) {
-                        Text(text = "Regresar")
-                    }
                     Image(
                         painter = painterResource(id = R.drawable.file),
                         contentDescription = null
                     )
-                    Button(onClick = { pdfPickerLauncher.launch(arrayOf("application/pdf"))  }) {
-                        Text(text = "Abrir archivo")
-                    }
-                    TextField(value = selectedPdf,placeholder ={ Text(text = "archivo")}, onValueChange = {})
-                    Button(onClick = { imagePickerLauncher.launch(arrayOf("image/*")) }) {
-                        Text(text = "Imagen")
-                    }
-                    TextField(value = selectedImage, placeholder = { Text(text = "imagen") }, onValueChange = {})
-                    TextInputComponent(
-                        modifier = Modifier, placeholder = "Titulo", onChangeText = {}
+                }
+                Button(
+                    onClick = { pdfPickerLauncher.launch(arrayOf("application/pdf")) },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .widthIn(min = 170.dp),
+                    shape = RoundedCornerShape(7.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppTheme.colors.colorLogin,
+                        contentColor = Color.White
                     )
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(150.dp)
-                            .padding(horizontal = 10.dp),
-                        value = "",
-                        onValueChange = {},
-                        placeholder = { Text(text = "Resumen") },
-                        shape = RoundedCornerShape(10.dp),
-                        maxLines = 6
+                ) {
+                    Text(text = "Abrir archivo")
+                }
+                TextField(
+                    value = selectedPdf,
+                    placeholder = { Text(text = "archivo") },
+                    onValueChange = {},
+                    modifier = Modifier
+                        .padding(start = 10.dp, end = 10.dp, top = 5.dp)
+                        .fillMaxWidth(),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = AppTheme.colors.cardColor,
+                        unfocusedContainerColor = AppTheme.colors.cardColor
                     )
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp, vertical = 10.dp),
-                        value = "",
-                        onValueChange = {},
-                        placeholder = { Text(text = "Categoria") },
-                        shape = RoundedCornerShape(10.dp),
-                        maxLines = 6
+                )
+                Button(
+                    onClick = { imagePickerLauncher.launch(arrayOf("image/*")) },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .widthIn(min = 170.dp),
+                    shape = RoundedCornerShape(7.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppTheme.colors.colorLogin,
+                        contentColor = Color.White
                     )
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "Fecha de publicacion")
-                    }
+                ) {
+                    Text(text = "Imagen")
+                }
+                TextField(
+                    value = selectedImage,
+                    placeholder = { Text(text = "imagen") },
+                    onValueChange = {},
+                    modifier = Modifier
+                        .padding(start = 10.dp, end = 10.dp, top = 5.dp)
+                        .fillMaxWidth(),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = AppTheme.colors.cardColor,
+                        unfocusedContainerColor = AppTheme.colors.cardColor
+                    )
+                )
+                TextInputComponent(
+                    modifier = Modifier, placeholder = "Titulo", onChangeText = {}
+                )
+                OutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .padding(horizontal = 10.dp),
+                    value = "",
+                    onValueChange = {},
+                    placeholder = { Text(text = "Resumen") },
+                    shape = RoundedCornerShape(10.dp),
+                    maxLines = 6
+                )
+                OutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 10.dp),
+                    value = "",
+                    onValueChange = {},
+                    placeholder = { Text(text = "Categoria") },
+                    shape = RoundedCornerShape(10.dp),
+                    maxLines = 6
+                )
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .widthIn(min = 170.dp),
+                    shape = RoundedCornerShape(7.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppTheme.colors.colorLogin,
+                        contentColor = Color.White
+                    )
+                ) {
                     Text(text = "Fecha de publicacion")
-                    SpinnerComponent(
-                        text = "Selecciona un autor",
-                        items = state.value.authors,
-                        labelSelector = {it.name}
+                }
+                Text(text = "Fecha de publicacion")
+                SpinnerComponent(
+                    text = "Selecciona un autor",
+                    items = state.value.authors,
+                    labelSelector = { it.name }
+                )
+                SpinnerComponent(
+                    text = "Selecciona tipo de publicacion",
+                    items = state.value.types,
+                    labelSelector = { it.name }
+                )
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .widthIn(min = 170.dp),
+                    shape = RoundedCornerShape(7.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppTheme.colors.colorLogin,
+                        contentColor = Color.White
                     )
-                    SpinnerComponent(
-                        text = "Selecciona tipo de publicacion",
-                        items = state.value.types,
-                        labelSelector = {it.name}
+                ) {
+                    Text(text = "Crear archivo")
+                }
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .widthIn(min = 170.dp),
+                    shape = RoundedCornerShape(7.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppTheme.colors.colorLogin,
+                        contentColor = Color.White
                     )
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "Crear archivo")
-                    }
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "Limpiar")
-                    }
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "Cancelar")
-                    }
+                ) {
+                    Text(text = "Limpiar")
+                }
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .widthIn(min = 170.dp),
+                    shape = RoundedCornerShape(7.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppTheme.colors.colorLogin,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(text = "Cancelar")
                 }
             }
         }
@@ -182,5 +272,7 @@ fun AddFileAdminView(
 @Composable
 fun AddFilePreView() {
     val context = LocalContext.current
-    AddFileAdminView()
+    AppTheme {
+        AddFileAdminView()
+    }
 }

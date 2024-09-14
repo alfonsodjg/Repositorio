@@ -23,19 +23,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.repositorio.R
+import com.example.repositorio.ui.theme.AppTheme
 
 @Composable
 fun CustomBottomBarComponent(
     onGoToHome: () -> Unit,
     onGoToProfile: () -> Unit,
-    onGoToAbout:()->Unit,
-    onGoToAdmin:()->Unit
+    onGoToAbout: () -> Unit,
+    onGoToAdmin: () -> Unit
 ) {
     Surface(
         modifier = Modifier
             .height(50.dp)
-            .fillMaxWidth().background(Color.White),
-        color = Color.Blue,
+            .fillMaxWidth()
+            .background(AppTheme.colors.containerColor),
+        color = AppTheme.colors.cardColor,
         shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
     ) {
         Row(
@@ -51,9 +53,16 @@ fun CustomBottomBarComponent(
                 Image(
                     painter = painterResource(id = R.drawable.ic_home),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp).padding(top = 5.dp)
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(top = 5.dp)
                 )
-                Text(text = "Home", fontSize = 12.sp, fontWeight = FontWeight.W800)
+                Text(
+                    text = "Home",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W800,
+                    color = AppTheme.colors.textColor
+                )
             }
             Column(
                 modifier = Modifier
@@ -65,9 +74,16 @@ fun CustomBottomBarComponent(
                 Image(
                     painter = painterResource(id = R.drawable.usuario),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp).padding(top = 5.dp)
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(top = 5.dp)
                 )
-                Text(text = "Profile", fontSize = 12.sp, fontWeight = FontWeight.W800)
+                Text(
+                    text = "Profile",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W800,
+                    color = AppTheme.colors.textColor
+                )
             }
             Column(
                 modifier = Modifier
@@ -79,9 +95,16 @@ fun CustomBottomBarComponent(
                 Image(
                     painter = painterResource(id = R.drawable.information),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp).padding(top = 5.dp)
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(top = 5.dp)
                 )
-                Text(text = "About", fontSize = 12.sp, fontWeight = FontWeight.W800)
+                Text(
+                    text = "About",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W800,
+                    color = AppTheme.colors.textColor
+                )
             }
             Column(
                 modifier = Modifier
@@ -93,9 +116,16 @@ fun CustomBottomBarComponent(
                 Image(
                     painter = painterResource(id = R.drawable.ic_admi),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp).padding(top = 5.dp)
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(top = 5.dp)
                 )
-                Text(text = "Admin", fontSize = 12.sp, fontWeight = FontWeight.W800)
+                Text(
+                    text = "Admin",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W800,
+                    color = AppTheme.colors.textColor
+                )
             }
         }
     }
@@ -104,10 +134,12 @@ fun CustomBottomBarComponent(
 @Preview
 @Composable
 fun BottomBarPreview() {
-    CustomBottomBarComponent(
-        onGoToHome = { /*TODO*/ },
-        onGoToProfile = {},
-        onGoToAbout = {},
-        onGoToAdmin = {}
-    )
+    AppTheme {
+        CustomBottomBarComponent(
+            onGoToHome = { /*TODO*/ },
+            onGoToProfile = {},
+            onGoToAbout = {},
+            onGoToAdmin = {}
+        )
+    }
 }

@@ -8,7 +8,9 @@ import com.example.repositorio.navigation.destinations.MainNavRoutes
 import com.example.repositorio.navigation.destinations.addfile.AddFileDestinations
 import com.example.repositorio.navigation.destinations.addfile.AddFilePipeNav
 import com.example.repositorio.navigation.model.ScaffoldMainModel
+import com.example.repositorio.navigation.utils.ScaffoldDefaults
 import com.example.repositorio.ui.modules.add_file_admin.view.AddFileAdminView
+import com.example.repositorio.ui.modules.add_file_admin.view.AddFileRecovery
 
 fun NavGraphBuilder.addFileGraph(
     startDestination: Any = AddFileDestinations.AddFile,
@@ -19,7 +21,18 @@ fun NavGraphBuilder.addFileGraph(
         startDestination = startDestination
     ){
         composable<AddFileDestinations.AddFile> {
-            AddFileAdminView()
+            AddFileRecovery(
+                onTopBarChange = {
+                    onTopBarChange(
+                        ScaffoldDefaults.navigateBar(
+                            title = it,
+                            enableActionIcon = true,
+                            imgLightSrc = "",
+                            imgDarkSrc = ""
+                        )
+                    )
+                }
+            )
         }
     }
 }

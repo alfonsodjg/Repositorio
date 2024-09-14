@@ -6,6 +6,7 @@ import com.example.repositorio.domain.modules.add_author.usecase.GetCarrerasUseC
 import com.example.repositorio.domain.modules.create_account.usecase.GetCreateAccountUseCase
 import com.example.repositorio.domain.modules.create_account_verification.usecase.CreateAccountVerificationUseCase
 import com.example.repositorio.domain.modules.login_auth.usecase.GetLoginAuthUseCase
+import com.example.repositorio.domain.modules.logout.usecase.GetLogOutUseCase
 import com.example.repositorio.domain.modules.reset_password.usecase.GetChangePasswordUseCase
 import com.example.repositorio.domain.modules.reset_password.usecase.GetResetPasswordUseCase
 import com.example.repositorio.domain.modules.reset_password.usecase.GetResetPasswordVerificationUseCase
@@ -21,4 +22,5 @@ fun getDomainModuleDi() = module {
     factory<GetResetPasswordUseCase> { GetResetPasswordUseCase(get()) }
     factory<GetResetPasswordVerificationUseCase> { GetResetPasswordVerificationUseCase(get()) }
     factory<GetChangePasswordUseCase> { GetChangePasswordUseCase(get()) }
+    factory<GetLogOutUseCase> { GetLogOutUseCase(get()) }
 }

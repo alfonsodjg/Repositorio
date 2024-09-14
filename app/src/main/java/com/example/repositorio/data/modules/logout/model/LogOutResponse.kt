@@ -1,8 +1,8 @@
-package com.example.repositorio.data.modules.reset_password.model
+package com.example.repositorio.data.modules.logout.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResetPasswordVerificationResponse(
+data class LogOutResponse(
     @SerializedName("success")
     val success: String?,
     @SerializedName("detail")

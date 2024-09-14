@@ -35,7 +35,7 @@ fun FooterComponent(
     ) {
         Row(
             modifier = Modifier
-                .padding(vertical = 10.dp)
+                .padding(vertical = 1.dp)
                 .clickable { onGoToAccount() },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
@@ -46,7 +46,7 @@ fun FooterComponent(
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.W600,
                 color = AppTheme.colors.textBlackWhite,
-                fontSize = 14.sp
+                fontSize = 13.sp
             )
             OutlinedButton(
                 onClick = { onGoToAccount() },
@@ -60,7 +60,7 @@ fun FooterComponent(
                     text = "Registrarme",
                     textAlign = TextAlign.Center,
                     color = Color.Red,
-                    fontSize = 14.sp
+                    fontSize = 13.sp
                 )
             }
         }

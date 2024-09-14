@@ -1,5 +1,6 @@
 package com.example.repositorio.components
 
+import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
@@ -43,21 +44,25 @@ import com.example.repositorio.ui.theme.AppTheme
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    device = Devices.PIXEL_2
+    device = Devices.PIXEL_2,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 fun BottomPreView() {
-    BottomSheetComponent(
-        title = "Servicio no disponible",
-        description = "Por el momento el servicio no esta disponible, intentalo mas tarde",
-        textButton = "Cerrar",
-        onDismiss = {},
-        onGoInitHome = {},
-        showErrorBottomSheet = remember {
-            mutableStateOf(true)
-        },
-        isVisibleButtonGoHome = true
-    )
+    AppTheme {
+        BottomSheetComponent(
+            title = "Servicio no disponible",
+            description = "Por el momento el servicio no esta disponible, intentalo mas tarde",
+            textButton = "Cerrar",
+            textSecondButton = "Cancelar",
+            onDismiss = {},
+            onGoInitHome = {},
+            showErrorBottomSheet = remember {
+                mutableStateOf(true)
+            },
+            isVisibleButtonGoHome = true
+        )
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -66,6 +71,7 @@ fun BottomSheetComponent(
     title: String,
     description: String,
     textButton: String,
+    textSecondButton: String,
     onGoInitHome: () -> Unit,
     onDismiss: () -> Unit,
     showErrorBottomSheet: MutableState<Boolean>,
@@ -92,7 +98,7 @@ fun BottomSheetComponent(
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
-                        color = Color.White
+                        color = AppTheme.colors.cardColor
                     ) {
                         Column(
                             modifier = Modifier
@@ -104,14 +110,14 @@ fun BottomSheetComponent(
                                 text = title,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W800,
-                                color = Color.Black
+                                color = AppTheme.colors.textColor
                             )
                             Text(
                                 text = description,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.W400,
                                 modifier = Modifier.padding(top = 24.dp),
-                                color = Color.Black
+                                color = AppTheme.colors.textColor
                             )
                             Row(
                                 modifier = Modifier
@@ -128,14 +134,14 @@ fun BottomSheetComponent(
                                         .weight(1f),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.White,
+                                        containerColor = AppTheme.colors.cardColor,
                                         contentColor = Color.Black
                                     ),
                                     border = BorderStroke(1.dp, Color.Black)
                                 ) {
                                     Text(
                                         text = textButton,
-                                        color = Color.Black
+                                        color = AppTheme.colors.textColor
                                     )
                                 }
                                 if (isVisibleButtonGoHome) {
@@ -146,7 +152,11 @@ fun BottomSheetComponent(
                                         },
                                         modifier = Modifier
                                             .height(85.dp)
-                                            .padding(top = 15.dp, bottom = 20.dp, start = paddingDynamic)
+                                            .padding(
+                                                top = 15.dp,
+                                                bottom = 20.dp,
+                                                start = paddingDynamic
+                                            )
                                             .weight(1f),
                                         shape = RoundedCornerShape(10.dp),
                                         colors = ButtonDefaults.buttonColors(
@@ -155,7 +165,7 @@ fun BottomSheetComponent(
                                         )
                                     ) {
                                         Text(
-                                            text = "Cancelar",
+                                            text = textSecondButton,
                                             color = Color.White
                                         )
                                     }

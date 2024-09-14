@@ -59,6 +59,7 @@ fun LoginRecovery(
                 title = "Servicio no disponible",
                 description = "Lo sentimos por el momento el servicio no esta disponible, contacta a tu administrador para mas informacion.",
                 textButton = "Cerrar",
+                textSecondButton = "Cancelar",
                 onDismiss = {
                     showBottomSheet.value = false
                     viewModel.clearError()

@@ -8,13 +8,18 @@ import com.example.repositorio.components.BottomSheetComponent
 @Composable
 fun BottomSheetRecovery(
     goToLogin: () -> Unit,
-    showBottomSheet: MutableState<Boolean>
+    showBottomSheet: MutableState<Boolean>,
+    title: String,
+    textSecondButton: String,
+    description:String,
+    textButton:String
 ) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         BottomSheetComponent(
-            title = "Cancelar proceso",
-            description = "Si cancelas el proceso es posible que pierdas todo el progreso para recuperar tu cuenta, tendras que volver a empezar la solicitud",
-            textButton = "Permanecer",
+            title = title,
+            description = description,
+            textButton = textButton,
+            textSecondButton = textSecondButton,
             isVisibleButtonGoHome = true,
             onGoInitHome = { goToLogin() },
             onDismiss = {

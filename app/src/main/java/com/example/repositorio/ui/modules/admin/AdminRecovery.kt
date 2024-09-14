@@ -1,6 +1,8 @@
 package com.example.repositorio.ui.modules.admin
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import com.example.repositorio.ui.modules.admin.view.AdminView
 
 @Composable
@@ -10,7 +12,8 @@ fun AdminRecovery(
     onGoToAbout:()->Unit,
     onGoToAdmin:()->Unit,
     onGoToAddFile:()->Unit,
-    onGoToAddAuthor:()->Unit
+    onGoToAddAuthor:()->Unit,
+    showBottomSheetLogOut: MutableState<Boolean>
 ){
     AdminView(
         onGoToHome = onGoToHome,
@@ -20,4 +23,7 @@ fun AdminRecovery(
         onGoToAddFile = onGoToAddFile,
         onGoToAddAuthor = onGoToAddAuthor
     )
+    BackHandler {
+        showBottomSheetLogOut.value = true
+    }
 }

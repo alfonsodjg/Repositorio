@@ -8,8 +8,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.repositorio.ui.theme.AppTheme
 
 @Composable
 fun TextInputComponent(
@@ -27,13 +31,18 @@ fun TextInputComponent(
             isEmailValid(emailRegex.matches(it))
         },
         placeholder = {
-            Text(text = placeholder)
+            Text(
+                text = placeholder,
+                color = Color.Gray
+            )
         },
         modifier = modifier
             .padding(horizontal = 10.dp, vertical = 10.dp)
             .fillMaxWidth()
             .height(60.dp),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(10.dp),
+        textStyle = TextStyle(color = AppTheme.colors.textInput, fontSize = 13.sp),
+        singleLine = true
     )
 }
 

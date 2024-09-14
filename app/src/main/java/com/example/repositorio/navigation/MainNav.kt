@@ -1,6 +1,5 @@
 package com.example.repositorio.navigation
 
-import android.os.Build
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -22,6 +21,7 @@ import com.example.repositorio.navigation.navGraph.addAuthorGraph
 import com.example.repositorio.navigation.navGraph.addFileGraph
 import com.example.repositorio.navigation.navGraph.homeGraph
 import com.example.repositorio.navigation.navGraph.loginGraph
+import com.example.repositorio.ui.modules.share.shareviewmodel.ShareViewModelLogOut
 
 @Composable
 fun MainNav(
@@ -29,7 +29,9 @@ fun MainNav(
     parentDestination: Any = MainNavRoutes.LoginRoot,
     innerPadding: PaddingValues,
     onTopBarChange: (ScaffoldMainModel) -> Unit,
-    showAlertBottomSheet: MutableState<Boolean>
+    showAlertBottomSheet: MutableState<Boolean>,
+    showBottomSheetLogOut: MutableState<Boolean>,
+    shareViewModel: ShareViewModelLogOut
 ) {
     NavHost(
         navController = navHostController,
@@ -37,7 +39,7 @@ fun MainNav(
         Modifier.padding(innerPadding)
     ) {
         loginGraph(
-            showAlertBottomSheet= showAlertBottomSheet,
+            showAlertBottomSheet = showAlertBottomSheet,
             onTopBarChange = onTopBarChange,
             navigateTo = { dest ->
                 when (dest) {
@@ -52,18 +54,23 @@ fun MainNav(
                             LoginDestinations.CreateAccount
                         )
                     }
+
                     is LoginPipeNav.CreateAccountVerification -> {
                         navHostController.navigate(LoginDestinations.CreateAccountVerification)
                     }
-                    is LoginPipeNav.ResetPassword->{
+
+                    is LoginPipeNav.ResetPassword -> {
                         navHostController.navigate(LoginDestinations.ResetPassword)
                     }
-                    is LoginPipeNav.ResetPasswordVerification->{
+
+                    is LoginPipeNav.ResetPasswordVerification -> {
                         navHostController.navigate(LoginDestinations.ResetPasswordVerification)
                     }
-                    is LoginPipeNav.ResetPasswordChangePassword->{
+
+                    is LoginPipeNav.ResetPasswordChangePassword -> {
                         navHostController.navigate(LoginDestinations.ResetPasswordChangePassword)
                     }
+
                     is LoginPipeNav.HomeApp -> {
                         navHostController.navigate(MainNavRoutes.HomeRoot)
                     }
@@ -72,6 +79,8 @@ fun MainNav(
         )
         homeGraph(
             onTopBarChange = onTopBarChange,
+            showBottomSheetLogOut = showBottomSheetLogOut,
+            shareViewModel = shareViewModel,
             navigateTo = { dest ->
                 when (dest) {
                     is HomePipeNav.About -> {
@@ -102,10 +111,16 @@ fun MainNav(
                         )
                     }
 
-                    HomePipeNav.AddAuthor -> {
+                    is HomePipeNav.AddAuthor -> {
                         navHostController.navigate(
                             MainNavRoutes.AddAuthorRoot
                         )
+                    }
+
+                    is HomePipeNav.LoginBack -> {
+                        navHostController.navigate(MainNavRoutes.LoginRoot){
+                            popUpTo(0) { inclusive = true }
+                        }
                     }
                 }
             }
@@ -122,7 +137,7 @@ fun MainNav(
         )
         addAuthorGraph(
             onTopBarChange = onTopBarChange,
-            navigateTo = { dest->
+            navigateTo = { dest ->
                 when (dest) {
                     AddAuthorPipeNav.AddAuthor -> {
                         navHostController.navigate(AddAuthorDestinations.AddAuthor)
