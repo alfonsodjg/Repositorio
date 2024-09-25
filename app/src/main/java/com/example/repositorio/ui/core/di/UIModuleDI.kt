@@ -3,6 +3,7 @@ package com.example.repositorio.ui.core.di
 import com.example.repositorio.ui.modules.add_author.viewmodel.AddAuthorViewModel
 import com.example.repositorio.ui.modules.create_account.viewmodel.CreateAccountViewModel
 import com.example.repositorio.ui.modules.create_account_verification.viewmodel.CreateAccountVerificationViewModel
+import com.example.repositorio.ui.modules.home.viewmodel.HomeViewModel
 import com.example.repositorio.ui.modules.login.viewmodel.LoginViewModel
 import com.example.repositorio.ui.modules.reset_password.change_password.viewmodel.ChangePasswordViewModel
 import com.example.repositorio.ui.modules.reset_password.email_detail.viewmodel.ResetPassViewModel
@@ -22,4 +23,5 @@ fun getUIModuleDI() = module {
     viewModel { VerificationCodeViewModel(get()) }
     viewModel { ChangePasswordViewModel(get()) }
     viewModel { ShareViewModelLogOut(get()) }
+    viewModel { HomeViewModel(get(), get()) }
 }

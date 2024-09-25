@@ -12,5 +12,7 @@ fun getDarkColors() =
         colorRegisterAccount= Color(0xFFFFFFFF),
         textBlackWhite = Color.Black,
         cardColor = Color(0XFF202C33),
-        textInput = Color(0xFF69F5E9)
+        textInput = Color(0xFF69F5E9),
+        textRed = Color.Red,
+        snackBarColor = Color(0xFFC3C3C3)
     )

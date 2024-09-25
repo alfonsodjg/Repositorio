@@ -3,12 +3,14 @@ package com.example.repositorio.data.core.di
 import com.example.repositorio.data.modules.add_author.repository.ImplAddAuthorRepository
 import com.example.repositorio.data.modules.create_account.repository.ImplCreateAccount
 import com.example.repositorio.data.modules.create_account_verification.repository.ImplCreateAccountVerificationRepository
+import com.example.repositorio.data.modules.home.repository.ImplBooksRepository
 import com.example.repositorio.data.modules.login_auth.repository.ImplLoginAuthRepository
 import com.example.repositorio.data.modules.logout.repository.ImplLogOutRepository
 import com.example.repositorio.data.modules.reset_password.repository.ImplResetPasswordRepository
 import com.example.repositorio.domain.modules.add_author.repository.IAddAuthorRepository
 import com.example.repositorio.domain.modules.create_account.repository.ICreateAccount
 import com.example.repositorio.domain.modules.create_account_verification.repository.ICreateAccountVerification
+import com.example.repositorio.domain.modules.home.repository.IBooksRepository
 import com.example.repositorio.domain.modules.login_auth.repository.ILoginAuthRepository
 import com.example.repositorio.domain.modules.logout.repository.ILogOutRepository
 import com.example.repositorio.domain.modules.reset_password.repository.IResetPasswordRepository
@@ -21,4 +23,5 @@ fun getDataModuleDi() = module{
     factory<ICreateAccountVerification> { ImplCreateAccountVerificationRepository() }
     factory<IResetPasswordRepository> { ImplResetPasswordRepository() }
     factory<ILogOutRepository> { ImplLogOutRepository() }
+    factory<IBooksRepository> { ImplBooksRepository() }
 }

@@ -39,13 +39,13 @@ fun LoaderComponent() {
             modifier = Modifier.fillMaxSize()
         ) {
             val (loading) = createRefs()
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.circular_loading))
             val baseGuideline = createGuidelineFromBottom(
                 fraction = 0.3f
             )
             Column(
                 modifier = Modifier
-                    .size(114.dp)
+                    .size(200.dp)
                     .constrainAs(loading) {
                         top.linkTo(parent.top)
                         bottom.linkTo(baseGuideline)

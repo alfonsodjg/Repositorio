@@ -13,5 +13,7 @@ data class StyleColors (
     val colorRegisterAccount: Color = Color.Unspecified,
     val textBlackWhite: Color = Color.Unspecified,
     val cardColor:Color = Color.Unspecified,
-    val textInput:Color = Color.Unspecified
+    val textInput:Color = Color.Unspecified,
+    val textRed: Color = Color.Red,
+    val snackBarColor: Color = Color.Unspecified
 )

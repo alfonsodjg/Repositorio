@@ -5,6 +5,8 @@ import com.example.repositorio.domain.modules.add_author.usecase.GetCampusUseCas
 import com.example.repositorio.domain.modules.add_author.usecase.GetCarrerasUseCase
 import com.example.repositorio.domain.modules.create_account.usecase.GetCreateAccountUseCase
 import com.example.repositorio.domain.modules.create_account_verification.usecase.CreateAccountVerificationUseCase
+import com.example.repositorio.domain.modules.home.usecase.BookPdfDownloadUseCase
+import com.example.repositorio.domain.modules.home.usecase.BooksUseCase
 import com.example.repositorio.domain.modules.login_auth.usecase.GetLoginAuthUseCase
 import com.example.repositorio.domain.modules.logout.usecase.GetLogOutUseCase
 import com.example.repositorio.domain.modules.reset_password.usecase.GetChangePasswordUseCase
@@ -23,4 +25,6 @@ fun getDomainModuleDi() = module {
     factory<GetResetPasswordVerificationUseCase> { GetResetPasswordVerificationUseCase(get()) }
     factory<GetChangePasswordUseCase> { GetChangePasswordUseCase(get()) }
     factory<GetLogOutUseCase> { GetLogOutUseCase(get()) }
+    factory<BooksUseCase> { BooksUseCase(get()) }
+    factory<BookPdfDownloadUseCase> { BookPdfDownloadUseCase(get()) }
 }

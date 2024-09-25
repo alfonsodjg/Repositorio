@@ -11,4 +11,6 @@ object ApiEndpoint {
     const val RESET_PASSWORD = "/api/auth/password/reset/"
     const val RESET_PASSWORD_VERIFICATION = "/api/auth/password/reset/verify/"
     const val CHANGE_PASSWORD = "/api/auth/password/reset/verified/"
+    const val GET_ALL_BOOKS = "/api/archivo/"
+    const val DOWNLOAD_BOOK_PDF = "/api/archivo/{id}"
 }

@@ -1,44 +1,43 @@
 package com.example.repositorio.data.modules.home.model
 
-
-import com.example.repositorio.domain.modules.home.model.BookResponseDomainModel
-import com.example.repositorio.domain.modules.home.model.BooksDomainModel
-import com.example.repositorio.domain.modules.home.model.PageInfoDomainModel
 import com.google.gson.annotations.SerializedName
 
-data class BooksDataModel(
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("titulo")
-    val titulo: String,
-    @SerializedName("imagen")
-    val imagen: String,
-    @SerializedName("materia")
-    val materia: String
-){
-    fun mapToDomain() =
-        BooksDomainModel(
-            id, titulo, imagen, materia
-        )
-}
-
 data class BookResponse(
-    @SerializedName("results")
-    val results: List<BooksDataModel>,
     @SerializedName("info")
-    val info: PageInfo
+    val info: InfoBookResponse?,
+    @SerializedName("results")
+    val results: List<BookListResponse>?
 ){
-    fun toDomain() = BookResponseDomainModel(
-        results.map { it.mapToDomain() },
-        info.toDomain()
+    data class InfoBookResponse(
+        @SerializedName("count")
+        val count: Int?,
+        @SerializedName("next")
+        val next: Int?,
+        @SerializedName("prev")
+        val prev: Int?,
+        @SerializedName("pages")
+        val pages: Int?,
+        @SerializedName("page_size")
+        val pageSize: Int?
     )
-}
-
-data class PageInfo(
-    @SerializedName("pages")
-    val pages: Int
-){
-    fun toDomain() = PageInfoDomainModel(
-        pages
+    data class BookListResponse(
+        @SerializedName("id")
+        val id: Int?,
+        @SerializedName("titulo")
+        val title: String?,
+        @SerializedName("imagen")
+        val image: String?,
+        @SerializedName("materia")
+        val materia: String?,
+        @SerializedName("fecha_publicacion")
+        val datePublication: String?,
+        @SerializedName("pdf")
+        val pdfFile: String?,
+        @SerializedName("resumen")
+        val resume: String?,
+        @SerializedName("tipo_de_publicacion")
+        val publicationType: String?,
+        @SerializedName("autor")
+        val author: List<String>?
     )
 }

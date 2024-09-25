@@ -12,5 +12,7 @@ fun getLightColor() =
         colorRegisterAccount = Color.Black,
         textBlackWhite = Color.White,
         cardColor = Color.White,
-        textInput = Color(0xFF0306D6)
+        textInput = Color(0xFF0306D6),
+        textRed = Color.Red,
+        snackBarColor = Color(0xFFC3C3C3)
     )
