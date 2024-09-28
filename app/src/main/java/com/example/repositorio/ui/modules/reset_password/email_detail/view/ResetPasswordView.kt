@@ -14,6 +14,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.repositorio.R
+import com.example.repositorio.components.ErrorComponent
 import com.example.repositorio.components.ProgressComponent
 import com.example.repositorio.components.TextInputComponent
 import com.example.repositorio.ui.theme.AppTheme
@@ -39,7 +42,8 @@ fun ResetPasswordViewPreView(){
         ResetPasswordView(
             email = "",
             updateEmailRequest = {_->},
-            onSendResetEmail = {}
+            onSendResetEmail = {},
+            isEnabledButton = false
         )
     }
 }
@@ -49,8 +53,11 @@ fun ResetPasswordViewPreView(){
 fun ResetPasswordView(
     email: String,
     updateEmailRequest:(String)->Unit,
-    onSendResetEmail:()->Unit
+    onSendResetEmail:()->Unit,
+    isEnabledButton: Boolean
 ){
+    val isEmailValid = remember { mutableStateOf(true) }
+    val hasInteracted = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -84,7 +91,15 @@ fun ResetPasswordView(
                     text = email,
                     onChangeText = {email->
                         updateEmailRequest(email)
-                    })
+                        hasInteracted.value = true
+                    },
+                    isEmailValid = { isValid ->
+                        isEmailValid.value = isValid
+                    }
+                )
+                if (hasInteracted.value && !isEmailValid.value) {
+                    ErrorComponent(error = "Correo no valido")
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -93,6 +108,7 @@ fun ResetPasswordView(
                 ) {
                     Button(
                         onClick = {onSendResetEmail()},
+                        enabled = isEnabledButton,
                         shape = RoundedCornerShape(7.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = AppTheme.colors.colorLogin,

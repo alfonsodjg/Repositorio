@@ -137,7 +137,7 @@ fun BottomSheetComponent(
                                         containerColor = AppTheme.colors.cardColor,
                                         contentColor = Color.Black
                                     ),
-                                    border = BorderStroke(1.dp, Color.Black)
+                                    border = BorderStroke(1.dp, Color.Blue)
                                 ) {
                                     Text(
                                         text = textButton,

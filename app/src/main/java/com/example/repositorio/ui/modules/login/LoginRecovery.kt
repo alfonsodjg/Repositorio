@@ -8,6 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.repositorio.components.AlertDialogComponent
 import com.example.repositorio.components.BottomSheetComponent
+import com.example.repositorio.navigation.main.DialogEvents
+import com.example.repositorio.navigation.main.core.SingleActionUI
 import com.example.repositorio.ui.modules.login.model.ErrorUi
 import com.example.repositorio.ui.modules.login.view.LoginView
 import com.example.repositorio.ui.modules.login.viewmodel.LoginViewModel
@@ -22,6 +24,7 @@ fun LoginRecovery(
     onGoToResetPass: () -> Unit
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
+    val sharedFlow = viewModel.sharedFlow.collectAsStateWithLifecycle(initialValue = SingleActionUI.None)
     val showError = remember {
         mutableStateOf(false)
     }
@@ -85,4 +88,5 @@ fun LoginRecovery(
 
         ErrorUi.None -> {}
     }
+    DialogEvents(singleActionUI = sharedFlow.value)
 }

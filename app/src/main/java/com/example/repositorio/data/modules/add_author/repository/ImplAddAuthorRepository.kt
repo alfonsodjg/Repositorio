@@ -57,7 +57,7 @@ class ImplAddAuthorRepository : IAddAuthorRepository {
         val ktor = KtorConf.KtorClient()
         return try {
             val response: AuthorResponse = ktor.post(AddAuthorResource.CreateAuthorResource()) {
-                header("Authorization", "Bearer $token")
+                header("Authorization", "Token $token")
                 setBody(
                     CreateAuthorRequest(
                         files = request.files,

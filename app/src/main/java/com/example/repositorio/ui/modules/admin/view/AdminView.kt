@@ -130,7 +130,7 @@ fun AdminView(
                             contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(7.dp),
-                        modifier = Modifier.width(180.dp)
+                        modifier = Modifier.width(210.dp)
                     ) {
                         Text(text = "Agregar documento")
                     }
@@ -139,7 +139,7 @@ fun AdminView(
                             onGoToAddAuthor()
                         },
                         modifier = Modifier.padding(top = 10.dp)
-                                .width(180.dp),
+                                .width(210.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = AppTheme.colors.colorLogin,
                             contentColor = Color.White

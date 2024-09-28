@@ -32,6 +32,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -95,7 +97,8 @@ fun ProfileRecovery(
         onGoToProfile = onGoToProfile,
         onGoToAbout = onGoToAbout,
         onGoToAdmin = onGoToAdmin,
-        onLogOut = onLogOut
+        onLogOut = onLogOut,
+        showBottomSheetLogOut = showBottomSheetLogOut
     )
     BackHandler {
         showBottomSheetLogOut.value = true
@@ -112,7 +115,8 @@ fun ProfileView(
     onGoToProfile: () -> Unit,
     onGoToAbout: () -> Unit,
     onGoToAdmin: () -> Unit,
-    onLogOut:()->Unit
+    onLogOut:()->Unit,
+    showBottomSheetLogOut: MutableState<Boolean>
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -195,7 +199,7 @@ fun ProfileView(
             ) {
                 Button(
                     modifier = Modifier.height(50.dp),
-                    onClick = { onLogOut() },
+                    onClick = { showBottomSheetLogOut.value = true },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = AppTheme.colors.colorLogin,
                         contentColor = Color.White
@@ -245,7 +249,10 @@ fun ProfilePreView(
             onGoToProfile = {},
             onGoToAbout = {},
             onGoToAdmin = {},
-            onLogOut = {}
+            onLogOut = {},
+            showBottomSheetLogOut = remember {
+                mutableStateOf(false)
+            }
         )
     }
 }
