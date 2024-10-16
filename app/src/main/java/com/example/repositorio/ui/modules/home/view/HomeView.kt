@@ -13,21 +13,32 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,7 +68,7 @@ fun HomePreView() {
             onGoToProfile = {},
             onGoToAbout = {},
             onGoToAdmin = {},
-            books = MockProviderHome.bookList
+            books = emptyList()
         )
     }
 }
@@ -76,6 +87,7 @@ fun HomeView(
     val statusBarColor = Color.Yellow
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+    var searchQuery by remember { mutableStateOf("") }
 
     SideEffect {
         systemUiController.setStatusBarColor(
@@ -83,6 +95,8 @@ fun HomeView(
             darkIcons = true
         )
     }
+
+    val filteredBooks = books.filter { it.title.contains(searchQuery, ignoreCase = true) }
 
     ConstraintLayout(
         modifier = Modifier
@@ -96,13 +110,56 @@ fun HomeView(
             .background(AppTheme.colors.containerColor)
             .windowInsetsPadding(WindowInsets.ime)
     ) {
-        val (header, footer) = createRefs()
+        val (search,header, footer) = createRefs()
 
+        Box(
+            modifier = Modifier.constrainAs(search){
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+            }
+        ) {
+            TextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                modifier = Modifier
+                    .padding(top = 10.dp, end = 10.dp, start = 10.dp)
+                    .fillMaxWidth(),
+                placeholder = { Text(text = "Buscar libro") },
+                singleLine = true,
+                shape = RoundedCornerShape(14.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = AppTheme.colors.cardColor,
+                    unfocusedContainerColor = AppTheme.colors.cardColor,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Buscar"
+                    )
+                },
+                trailingIcon = {
+                    if (searchQuery.isNotEmpty()) {
+                        IconButton(onClick = {
+                            searchQuery = ""
+                            focusManager.clearFocus()
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Limpiar búsqueda"
+                            )
+                        }
+                    }
+                }
+            )
+        }
         Column(
             modifier = Modifier
                 .verticalScroll(state = rememberScrollState())
                 .constrainAs(header) {
-                    top.linkTo(parent.top)
+                    top.linkTo(search.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     bottom.linkTo(footer.top)
@@ -114,12 +171,32 @@ fun HomeView(
                 contentDescription = null,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 5.dp)
             )
-            books.forEach {
-                Column {
+            if (filteredBooks.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_no_books),
+                        contentDescription = null,
+                        modifier = Modifier.size(160.dp),
+                        colorFilter = ColorFilter.tint(Color(0xFF602970))
+                    )
+                }
+                Text(
+                    text = "No se encontraron libros",
+                    modifier = Modifier.padding(16.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.W500,
+                    color = AppTheme.colors.textColor
+                )
+            }else {
+                filteredBooks.forEach { book ->
                     BookCard(
-                        book = it,
-                        onDownloadBook = { onDownloadBook(it.pdfFile) },
-                        onShareBook = {onShareBook(it.pdfFile)}
+                        book = book,
+                        onDownloadBook = { onDownloadBook(book.pdfFile) },
+                        onShareBook = { onShareBook(book.pdfFile) }
                     )
                 }
             }
@@ -241,7 +318,7 @@ fun BookCard(
                     color = AppTheme.colors.textColor,
                     modifier = Modifier.clickable { onDownloadBook() }
                 )
-                Box(
+                /*Box(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
@@ -263,7 +340,7 @@ fun BookCard(
                     fontWeight = FontWeight.W600,
                     color = AppTheme.colors.textColor,
                     modifier = Modifier.clickable { onShareBook() }
-                )
+                )*/
             }
         }
     }
